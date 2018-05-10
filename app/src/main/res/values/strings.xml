@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">PoC</string>
+
+    <!--Bottom Navigation View-->
+    <string name="bottom_nav_discover">DISCOVER</string>
+    <string name="bottom_nav_favorites">FAVORITES</string>
+    <string name="bottom_nav_recent">RECENT</string>
+    <string name="bottom_nav_downloads">DOWNLOADS</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

@@ -15,7 +15,7 @@ import com.example.trile.poc.database.model.MangaDetail;
         )
 public class MangaDetailEntity implements MangaDetail {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     private int Id;
 
     private String Description;

@@ -59,24 +59,24 @@ public class RootFragment extends Fragment {
 
         switch (viewPagerIndex) {
             case Constants.VIEW_PAGER_INDEX_DISCOVER:
-                fragment = DiscoverFragment.newInstance(1);
-                ((DiscoverFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
-                transaction.replace(R.id.root_container, fragment);
+//                fragment = DiscoverFragment.newInstance(1);
+//                ((DiscoverFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
+//                transaction.replace(R.id.root_container, fragment);
                 break;
             case Constants.VIEW_PAGER_INDEX_FAVORITES:
-                fragment = FavoritesFragment.newInstance();
-                ((FavoritesFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
-                transaction.replace(R.id.root_container, fragment);
+//                fragment = FavoritesFragment.newInstance();
+//                ((FavoritesFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
+//                transaction.replace(R.id.root_container, fragment);
                 break;
             case Constants.VIEW_PAGER_INDEX_RECENT:
-                fragment = RecentFragment.newInstance(1);
-                ((RecentFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
-                transaction.replace(R.id.root_container, fragment);
+//                fragment = RecentFragment.newInstance(1);
+//                ((RecentFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
+//                transaction.replace(R.id.root_container, fragment);
                 break;
             case Constants.VIEW_PAGER_INDEX_DOWNLOADS:
-                fragment = DownloadsFragment.newInstance();
-                ((DownloadsFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
-                transaction.replace(R.id.root_container, fragment);
+//                fragment = DownloadsFragment.newInstance();
+//                ((DownloadsFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
+//                transaction.replace(R.id.root_container, fragment);
                 break;
         }
         transaction.commit();

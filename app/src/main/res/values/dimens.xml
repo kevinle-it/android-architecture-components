@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--Toolbar-->
+    <dimen name="search_button_right_margin">8dp</dimen>
+    <!--Make space for the below Tab Layout (TabLayout default height is 48dp) -> Avoid overlap to each other issue when collapsing-->
+    <dimen name="toolbar_bottom_margin">48dp</dimen>
+
+    <!--Bottom Navigation View-->
+    <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
+    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">10sp</dimen>
+
+    <!--Manga Item-->
+    <dimen name="manga_item_corner_radius">2dp</dimen>
+    <dimen name="manga_item_elevation">1dp</dimen>
+    <dimen name="manga_info_height">66dp</dimen>
+    <dimen name="manga_info_margin">8dp</dimen>
+    <dimen name="manga_title_subtitle_margin">4dp</dimen>
+    <dimen name="manga_item_secondary_action_size">16dp</dimen>
+</resources>

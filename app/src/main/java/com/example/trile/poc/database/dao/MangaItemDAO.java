@@ -21,12 +21,12 @@ public interface MangaItemDAO {
     @Query("SELECT * FROM MangaItemEntity WHERE Id = :mangaItemId")
     LiveData<MangaItemEntity> loadMangaItem(int mangaItemId);
 
-    @Query("SELECT * FROM MangaItemEntity WHERE IsFavorited = 1")
-    LiveData<List<MangaItemEntity>> loadFavoriteMangas();
-
-    @Query("SELECT * FROM MangaItemEntity WHERE ReadElapsedTime > 0")
-    LiveData<List<MangaItemEntity>> loadRecentMangas();
-
-    @Query("SELECT * FROM MangaItemEntity WHERE NumChapterDownloaded > 0")
-    LiveData<List<MangaItemEntity>> loadDownloadedMangas();
+//    @Query("SELECT * FROM MangaItemEntity WHERE Favorited = 1")
+//    LiveData<List<MangaItemEntity>> loadFavoriteMangas();
+//
+//    @Query("SELECT * FROM MangaItemEntity WHERE ReadElapsedTime > 0")
+//    LiveData<List<MangaItemEntity>> loadRecentMangas();
+//
+//    @Query("SELECT * FROM MangaItemEntity WHERE NumChapterDownloaded > 0")
+//    LiveData<List<MangaItemEntity>> loadDownloadedMangas();
 }

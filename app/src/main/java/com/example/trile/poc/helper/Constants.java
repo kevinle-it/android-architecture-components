@@ -3,6 +3,11 @@ package com.example.trile.poc.helper;
 import com.example.trile.poc.R;
 
 public class Constants {
+    // Manga Rock Server's Base URL.
+    public static final String MANGA_ROCK_SERVER_BASE_URL = "http://mrapi.vn.nabstudio.com/query/web400/";
+    public static final int GET_ALL_MANGAS_MSID_CODE = 71;
+    public static final String GET_ALL_MANGAS_COUNTRY_CODE = "Vietnam";
+
     // Constants related to View Pager and Bottom Navigation View.
     public static final int VIEW_PAGER_OFF_SCREEN_PAGE_LIMIT = 3;
     public static final int VIEW_PAGER_INDEX_DISCOVER = 0;

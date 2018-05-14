@@ -18,7 +18,7 @@ import com.example.trile.poc.database.entity.MangaItemEntity;
 
 import java.util.List;
 
-@Database(entities = {MangaItemEntity.class}, version = 1)
+@Database(entities = {MangaItemEntity.class, MangaDetailEntity.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase sInstance;

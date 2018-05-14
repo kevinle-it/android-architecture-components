@@ -1,9 +1,11 @@
 package com.example.trile.poc.ui.activity;
 
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,6 +13,7 @@ import android.view.MenuItem;
 import com.example.trile.poc.R;
 import com.example.trile.poc.adapter.ViewPagerAdapter;
 import com.example.trile.poc.customview.CustomViewPager;
+import com.example.trile.poc.databinding.ActivityMainBinding;
 import com.example.trile.poc.helper.BottomNavigationViewHelper;
 import com.example.trile.poc.helper.Constants;
 import com.example.trile.poc.ui.fragment.RootFragment;
@@ -18,6 +21,9 @@ import com.example.trile.poc.ui.fragment.RootFragment;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
 
+    private ActivityMainBinding mBinding;
+
+    private DrawerLayout mDrawerLayout;
     private BottomNavigationView mBottomNavigationView;
     private CustomViewPager mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
@@ -80,15 +86,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mBinding.setLifecycleOwner(this);
+
+        // Initialize Drawer Layout
+        mDrawerLayout = mBinding.drawerLayout;
 
         // Initialize View Pager.
-        mViewPager = (CustomViewPager) findViewById(R.id.view_pager);
+        mViewPager = mBinding.viewPager;
         mViewPager.setPagingEnabled(false);
         mViewPager.setOffscreenPageLimit(Constants.VIEW_PAGER_OFF_SCREEN_PAGE_LIMIT);
 
         // Initialize Bottom Navigation View
-        mBottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        mBottomNavigationView = mBinding.bottomNavigation;
         mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         BottomNavigationViewHelper.disableShiftMode(mBottomNavigationView);
 
@@ -112,24 +122,24 @@ public class MainActivity extends AppCompatActivity {
         Fragment currentFragment = ((RootFragment) mViewPagerAdapter.getItem(mViewPager.getCurrentItem())).getCurrentFragment();
         switch (mViewPager.getCurrentItem()) {
             case Constants.VIEW_PAGER_INDEX_DISCOVER:
-                if (!((DiscoverFragment) currentFragment).onBackPressed()) {
-                    super.onBackPressed();
-                }
+//                if (!((DiscoverFragment) currentFragment).onBackPressed()) {
+//                    super.onBackPressed();
+//                }
                 break;
             case Constants.VIEW_PAGER_INDEX_FAVORITES:
-                if (!((FavoritesFragment) currentFragment).onBackPressed()) {
-                    super.onBackPressed();
-                }
+//                if (!((FavoritesFragment) currentFragment).onBackPressed()) {
+//                    super.onBackPressed();
+//                }
                 break;
             case Constants.VIEW_PAGER_INDEX_RECENT:
-                if (!((RecentFragment) currentFragment).onBackPressed()) {
-                    super.onBackPressed();
-                }
+//                if (!((RecentFragment) currentFragment).onBackPressed()) {
+//                    super.onBackPressed();
+//                }
                 break;
             case Constants.VIEW_PAGER_INDEX_DOWNLOADS:
-                if (!((DownloadsFragment) currentFragment).onBackPressed()) {
-                    super.onBackPressed();
-                }
+//                if (!((DownloadsFragment) currentFragment).onBackPressed()) {
+//                    super.onBackPressed();
+//                }
                 break;
             default:
                 super.onBackPressed();
@@ -141,19 +151,19 @@ public class MainActivity extends AppCompatActivity {
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         Fragment fragment1 = RootFragment.newInstance(Constants.VIEW_PAGER_INDEX_DISCOVER);
-        ((RootFragment) fragment1).setMangaListInteractionListener(mMangaListInteractionListener);
+//        ((RootFragment) fragment1).setMangaListInteractionListener(mMangaListInteractionListener);
         mViewPagerAdapter.addFragment(fragment1);
 
         Fragment fragment2 = RootFragment.newInstance(Constants.VIEW_PAGER_INDEX_FAVORITES);
-        ((RootFragment) fragment2).setMangaListInteractionListener(mMangaListInteractionListener);
+//        ((RootFragment) fragment2).setMangaListInteractionListener(mMangaListInteractionListener);
         mViewPagerAdapter.addFragment(fragment2);
 
         Fragment fragment3 = RootFragment.newInstance(Constants.VIEW_PAGER_INDEX_RECENT);
-        ((RootFragment) fragment3).setMangaListInteractionListener(mMangaListInteractionListener);
+//        ((RootFragment) fragment3).setMangaListInteractionListener(mMangaListInteractionListener);
         mViewPagerAdapter.addFragment(fragment3);
 
         Fragment fragment4 = RootFragment.newInstance(Constants.VIEW_PAGER_INDEX_DOWNLOADS);
-        ((RootFragment) fragment4).setMangaListInteractionListener(mMangaListInteractionListener);
+//        ((RootFragment) fragment4).setMangaListInteractionListener(mMangaListInteractionListener);
         mViewPagerAdapter.addFragment(fragment4);
 
         viewPager.setAdapter(mViewPagerAdapter);

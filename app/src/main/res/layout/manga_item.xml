@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="manga"
+                  type="com.example.trile.poc.database.model.MangaItem"/>
+        <variable name="callback"
+                  type="com.example.trile.poc.listener.MangaItemClickCallback"/>
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:onClick="@{() -> callback.onClick(manga)}"
+        app:cardCornerRadius="@dimen/manga_item_corner_radius"
+        app:cardPreventCornerOverlap="false"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="@dimen/manga_item_elevation">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/ripple_effect_gray">
+
+            <ImageView
+                android:id="@+id/manga_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimaryDark"/>
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/manga_info_height">
+
+                <TextView
+                    android:id="@+id/manga_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginStart="@dimen/manga_info_margin"
+                    android:layout_marginTop="@dimen/manga_info_margin"
+                    android:layout_marginBottom="@dimen/manga_title_subtitle_margin"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:text="@{manga.Title}"
+                    tools:text="Manga Name"/>
+
+                <TextView
+                    android:id="@+id/manga_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/manga_title"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginStart="@dimen/manga_info_margin"
+                    android:layout_marginBottom="@dimen/manga_info_margin"
+                    android:text="@{manga.Author}"
+                    tools:text="Author"/>
+
+                <ImageView
+                    android:id="@+id/secondary_action"
+                    android:layout_width="@dimen/manga_item_secondary_action_size"
+                    android:layout_height="@dimen/manga_item_secondary_action_size"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="@dimen/manga_info_margin"
+                    android:layout_marginEnd="@dimen/manga_info_margin"
+                    android:src="@drawable/ic_more_vert_black_24dp"/>
+
+            </android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</layout>

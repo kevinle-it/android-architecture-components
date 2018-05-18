@@ -21,6 +21,9 @@ public interface MangaItemDAO {
     @Query("SELECT * FROM MangaItemEntity WHERE Id = :mangaItemId")
     LiveData<MangaItemEntity> loadMangaItem(int mangaItemId);
 
+    @Query("SELECT EXISTS (SELECT Id FROM MangaItemEntity LIMIT 1)")
+    boolean isExistAnyManga();
+
 //    @Query("SELECT * FROM MangaItemEntity WHERE Favorited = 1")
 //    LiveData<List<MangaItemEntity>> loadFavoriteMangas();
 //

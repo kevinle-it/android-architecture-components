@@ -20,10 +20,7 @@ import com.example.trile.poc.database.entity.MangaDetailEntity;
 import com.example.trile.poc.database.entity.MangaItemEntity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Generates data to pre-populate the database

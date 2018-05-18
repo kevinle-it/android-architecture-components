@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "18fa3eb1937f7872285a21abe84370f6",
+    "identityHash": "ec7c118a77749ce490651f7481572a6d",
     "entities": [
       {
         "tableName": "MangaItemEntity",
@@ -38,7 +38,7 @@
       },
       {
         "tableName": "MangaDetailEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `Description` TEXT, FOREIGN KEY(`Id`) REFERENCES `MangaItemEntity`(`Id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER NOT NULL, `Description` TEXT, PRIMARY KEY(`Id`), FOREIGN KEY(`Id`) REFERENCES `MangaItemEntity`(`Id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "Id",
@@ -57,7 +57,7 @@
           "columnNames": [
             "Id"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": [
@@ -77,7 +77,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"18fa3eb1937f7872285a21abe84370f6\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ec7c118a77749ce490651f7481572a6d\")"
     ]
   }
 }

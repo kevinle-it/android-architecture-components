@@ -10,33 +10,47 @@
         android:fitsSystemWindows="true"
         tools:context=".ui.activity.MainActivity">
 
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.example.trile.poc.customview.CustomViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/bottom_navigation" />
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
             <android.support.design.widget.BottomNavigationView
                 android:id="@+id/bottom_navigation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_gravity="bottom"
                 app:itemIconTint="@color/bottom_nav_item_state_list"
                 app:itemTextColor="@color/bottom_nav_item_state_list"
-                app:menu="@menu/bottom_navigation" />
+                app:menu="@menu/bottom_navigation"/>
 
-        </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
 
         <android.support.design.widget.NavigationView
             android:id="@+id/navigation_drawer"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="start"/>
+            android:layout_gravity="start">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Empty Drawer"/>
+
+            </RelativeLayout>
+
+        </android.support.design.widget.NavigationView>
 
     </android.support.v4.widget.DrawerLayout>
 

@@ -4,18 +4,23 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.trile.poc.R;
 import com.example.trile.poc.adapter.ViewPagerAdapter;
 import com.example.trile.poc.customview.CustomViewPager;
+import com.example.trile.poc.database.model.MangaItem;
 import com.example.trile.poc.databinding.ActivityMainBinding;
 import com.example.trile.poc.helper.BottomNavigationViewHelper;
 import com.example.trile.poc.helper.Constants;
+import com.example.trile.poc.listener.OnMangaListInteractionListener;
 import com.example.trile.poc.ui.fragment.RootFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,11 +29,31 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mBinding;
 
     private DrawerLayout mDrawerLayout;
+    private NavigationView mNavigationView;
     private BottomNavigationView mBottomNavigationView;
     private CustomViewPager mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
 
     private MenuItem mPrevMenuItem;
+
+    private View.OnClickListener mNavigationToolbarButtonOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mDrawerLayout.openDrawer(GravityCompat.START);
+        }
+    };
+
+    private OnMangaListInteractionListener mMangaListInteractionListener = new OnMangaListInteractionListener() {
+        @Override
+        public void onOpenMangaInfo(MangaItem mangaItem) {
+
+        }
+
+        @Override
+        public void onOpenMangaChapter(MangaItem mangaItem) {
+
+        }
+    };
 
     private ViewPager.SimpleOnPageChangeListener mViewPagerOnPageChangeListener = new ViewPager.SimpleOnPageChangeListener() {
         @Override
@@ -125,21 +150,25 @@ public class MainActivity extends AppCompatActivity {
 //                if (!((DiscoverFragment) currentFragment).onBackPressed()) {
 //                    super.onBackPressed();
 //                }
+                super.onBackPressed();
                 break;
             case Constants.VIEW_PAGER_INDEX_FAVORITES:
 //                if (!((FavoritesFragment) currentFragment).onBackPressed()) {
 //                    super.onBackPressed();
 //                }
+                super.onBackPressed();
                 break;
             case Constants.VIEW_PAGER_INDEX_RECENT:
 //                if (!((RecentFragment) currentFragment).onBackPressed()) {
 //                    super.onBackPressed();
 //                }
+                super.onBackPressed();
                 break;
             case Constants.VIEW_PAGER_INDEX_DOWNLOADS:
 //                if (!((DownloadsFragment) currentFragment).onBackPressed()) {
 //                    super.onBackPressed();
 //                }
+                super.onBackPressed();
                 break;
             default:
                 super.onBackPressed();
@@ -151,19 +180,23 @@ public class MainActivity extends AppCompatActivity {
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         Fragment fragment1 = RootFragment.newInstance(Constants.VIEW_PAGER_INDEX_DISCOVER);
-//        ((RootFragment) fragment1).setMangaListInteractionListener(mMangaListInteractionListener);
+        ((RootFragment) fragment1).setNavigationClickListener(mNavigationToolbarButtonOnClickListener);
+        ((RootFragment) fragment1).setMangaListInteractionListener(mMangaListInteractionListener);
         mViewPagerAdapter.addFragment(fragment1);
 
         Fragment fragment2 = RootFragment.newInstance(Constants.VIEW_PAGER_INDEX_FAVORITES);
-//        ((RootFragment) fragment2).setMangaListInteractionListener(mMangaListInteractionListener);
+        ((RootFragment) fragment1).setNavigationClickListener(mNavigationToolbarButtonOnClickListener);
+        ((RootFragment) fragment2).setMangaListInteractionListener(mMangaListInteractionListener);
         mViewPagerAdapter.addFragment(fragment2);
 
         Fragment fragment3 = RootFragment.newInstance(Constants.VIEW_PAGER_INDEX_RECENT);
-//        ((RootFragment) fragment3).setMangaListInteractionListener(mMangaListInteractionListener);
+        ((RootFragment) fragment1).setNavigationClickListener(mNavigationToolbarButtonOnClickListener);
+        ((RootFragment) fragment3).setMangaListInteractionListener(mMangaListInteractionListener);
         mViewPagerAdapter.addFragment(fragment3);
 
         Fragment fragment4 = RootFragment.newInstance(Constants.VIEW_PAGER_INDEX_DOWNLOADS);
-//        ((RootFragment) fragment4).setMangaListInteractionListener(mMangaListInteractionListener);
+        ((RootFragment) fragment1).setNavigationClickListener(mNavigationToolbarButtonOnClickListener);
+        ((RootFragment) fragment4).setMangaListInteractionListener(mMangaListInteractionListener);
         mViewPagerAdapter.addFragment(fragment4);
 
         viewPager.setAdapter(mViewPagerAdapter);

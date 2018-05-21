@@ -16,4 +16,7 @@
     <dimen name="manga_info_margin">8dp</dimen>
     <dimen name="manga_title_subtitle_margin">4dp</dimen>
     <dimen name="manga_item_secondary_action_size">16dp</dimen>
+
+    <!--Loading Indicator-->
+    <dimen name="circular_progress_size">42dp</dimen>
 </resources>

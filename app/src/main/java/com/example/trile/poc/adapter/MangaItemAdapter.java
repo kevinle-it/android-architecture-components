@@ -1,6 +1,10 @@
 package com.example.trile.poc.adapter;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
@@ -8,23 +12,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.trile.poc.R;
 import com.example.trile.poc.database.model.MangaItem;
 import com.example.trile.poc.databinding.MangaItemBinding;
-import com.example.trile.poc.listener.MangaItemClickCallback;
+import com.example.trile.poc.listener.OnMangaListInteractionListener;
 
 import java.util.List;
 import java.util.Objects;
 
 public class MangaItemAdapter extends RecyclerView.Adapter<MangaItemAdapter.MangaItemViewHolder> {
 
+    private final Context mContext;
     List<? extends MangaItem> mMangaList;
 
     @Nullable
-    private final MangaItemClickCallback mMangaItemClickCallback;
+    private final OnMangaListInteractionListener mListener;
 
-    public MangaItemAdapter(@Nullable MangaItemClickCallback mMangaItemClickCallback) {
-        this.mMangaItemClickCallback = mMangaItemClickCallback;
+    public MangaItemAdapter(final Context context, @Nullable OnMangaListInteractionListener listener) {
+        mContext = context;
+        mListener = listener;
     }
 
     public void setMangaList(final List<? extends MangaItem> mangaList) {
@@ -69,13 +78,23 @@ public class MangaItemAdapter extends RecyclerView.Adapter<MangaItemAdapter.Mang
         MangaItemBinding binding = DataBindingUtil
                 .inflate(LayoutInflater.from(parent.getContext()), R.layout.manga_item,
                         parent, false);
-        binding.setCallback(mMangaItemClickCallback);
         return new MangaItemViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MangaItemViewHolder holder, int position) {
+        RequestOptions options = new RequestOptions();
+        options.fitCenter();
+        Glide.with(mContext)
+                .load(R.drawable.dragonball_poster)
+                .apply(options)
+                .into(holder.mBinding.mangaImage);
         holder.mBinding.setManga(mMangaList.get(position));
+        holder.mBinding.getRoot().setOnClickListener(v -> {
+            if (mListener != null) {
+                mListener.onOpenMangaInfo(mMangaList.get(position));
+            }
+        });
         holder.mBinding.executePendingBindings();
     }
 

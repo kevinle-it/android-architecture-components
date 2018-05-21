@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.discover.all.DiscoverAllFragment">
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/fragment_discover_all_swipe_refresh_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/fragment_discover_all_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    tools:listitem="@layout/manga_item"
+                    tools:layoutManager="android.support.v7.widget.GridLayoutManager"
+                    tools:itemCount="20"
+                    tools:spanCount="3"/>
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+        <!-- A progress bar that will be shown to users to indicate that manga items are loading -->
+        <ProgressBar
+            android:id="@+id/pb_loading_indicator"
+            android:layout_width="@dimen/circular_progress_size"
+            android:layout_height="@dimen/circular_progress_size"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+
+</layout>

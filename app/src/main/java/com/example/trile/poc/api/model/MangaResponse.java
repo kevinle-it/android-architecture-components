@@ -20,7 +20,11 @@ public class MangaResponse {
         return data;
     }
 
-    public class ResponseData {
+    /**
+     * avoid using non-static inner class
+     * watch here: https://www.youtube.com/watch?v=_CruQY55HOk
+     */
+    public static class ResponseData {
 
         @SerializedName("timestamp")
         private long timestamp;

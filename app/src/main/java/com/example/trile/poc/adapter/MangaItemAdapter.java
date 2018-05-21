@@ -84,7 +84,11 @@ public class MangaItemAdapter extends RecyclerView.Adapter<MangaItemAdapter.Mang
         return mMangaList == null ? 0 : mMangaList.size();
     }
 
-    public class MangaItemViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * avoid using non-static inner class
+     * watch here: https://www.youtube.com/watch?v=_CruQY55HOk
+     */
+    public static class MangaItemViewHolder extends RecyclerView.ViewHolder {
 
         final MangaItemBinding mBinding;
 

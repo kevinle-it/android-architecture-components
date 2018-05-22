@@ -1,10 +1,15 @@
-package com.example.trile.poc.helper;
+package com.example.trile.poc;
 
-import com.example.trile.poc.R;
-
+/**
+ * Manga Rock's Constants.
+ *
+ * @author trile
+ * @since 5/22/18 at 14:21
+ */
 public class Constants {
     // Manga Rock Server's Base URL.
-    public static final String MANGA_ROCK_SERVER_BASE_URL = "http://mrapi.vn.nabstudio.com/query/web400/";
+    public static final String MANGA_ROCK_SERVER_BASE_URL =
+            "http://mrapi.vn.nabstudio.com/query/web400/";
     public static final int GET_ALL_MANGAS_MSID_CODE = 71;
     public static final String GET_ALL_MANGAS_COUNTRY_CODE = "Vietnam";
 
@@ -18,5 +23,6 @@ public class Constants {
     public static final int NAVIGATION_INDEX_FAVORITES = R.id.bottom_navigation_favorites;
     public static final int NAVIGATION_INDEX_RECENT = R.id.bottom_navigation_recent;
     public static final int NAVIGATION_INDEX_DOWNLOADS = R.id.bottom_navigation_downloads;
-    public static final String ROOT_FRAGMENT_VIEW_PAGER_INDEX_PARAM = "ROOT_FRAGMENT_VIEW_PAGER_INDEX_PARAM";
+    public static final String ROOT_FRAGMENT_VIEW_PAGER_INDEX_PARAM =
+            "ROOT_FRAGMENT_VIEW_PAGER_INDEX_PARAM";
 }

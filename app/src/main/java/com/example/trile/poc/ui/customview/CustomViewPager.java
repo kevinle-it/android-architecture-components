@@ -1,4 +1,4 @@
-package com.example.trile.poc.customview;
+package com.example.trile.poc.ui.customview;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,6 +7,12 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+/**
+ * Add the ability of controlling View Pager's horizontal page scrolling mode.
+ *
+ * @author trile
+ * @since 5/22/18 at 14:10
+ */
 public class CustomViewPager extends ViewPager {
 
     private boolean mEnabled;

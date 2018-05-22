@@ -1,4 +1,4 @@
-package com.example.trile.poc.helper;
+package com.example.trile.poc.ui.helper;
 
 import android.annotation.SuppressLint;
 import android.support.design.internal.BottomNavigationItemView;
@@ -8,6 +8,12 @@ import android.util.Log;
 
 import java.lang.reflect.Field;
 
+/**
+ * Disable Bottom Navigation View Shift Mode.
+ *
+ * @author trile
+ * @since 5/22/18 at 14:16
+ */
 public class BottomNavigationViewHelper {
     @SuppressLint("RestrictedApi")
     public static void disableShiftMode(BottomNavigationView view) {

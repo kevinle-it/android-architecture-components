@@ -10,6 +10,10 @@ import com.example.trile.poc.database.entity.MangaDetailEntity;
 
 import java.util.List;
 
+/**
+ * @author trile
+ * @since 5/22/18 at 14:06
+ */
 @Dao
 public interface MangaDetailDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)

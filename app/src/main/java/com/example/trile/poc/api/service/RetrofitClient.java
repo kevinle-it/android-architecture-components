@@ -1,7 +1,7 @@
 package com.example.trile.poc.api.service;
 
 import com.example.trile.poc.AppExecutors;
-import com.example.trile.poc.helper.Constants;
+import com.example.trile.poc.Constants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -13,6 +13,12 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Provides the singleton of Retrofit Client.
+ *
+ * @author trile
+ * @since 5/22/18 at 14:06
+ */
 public class RetrofitClient {
 
     public static final String TAG = RetrofitClient.class.getSimpleName();
@@ -30,7 +36,10 @@ public class RetrofitClient {
 
                                         return chain.proceed(original);
                                     })
-                                    .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+                                    .addInterceptor(
+                                            new HttpLoggingInterceptor()
+                                                    .setLevel(HttpLoggingInterceptor.Level.HEADERS)
+                                    )
                                     .connectTimeout(5, TimeUnit.SECONDS)
                                     .writeTimeout(8, TimeUnit.SECONDS)
                                     .readTimeout(5, TimeUnit.SECONDS)

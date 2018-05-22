@@ -1,9 +1,11 @@
-package com.example.trile.poc.helper;
+package com.example.trile.poc.utils;
 
 /**
- * Created by lmtri on 8/12/2017.
+ * Utility for checking Null Object.
+ *
+ * @author trile
+ * @since 5/22/18 at 14:19
  */
-
 public class Objects {
     public static <T> T requireNonNull(T obj, String message) {
         if (obj == null)

@@ -10,7 +10,10 @@ import com.example.trile.poc.database.entity.MangaItemEntity;
 import java.util.List;
 
 /**
- * Repository handling the work with products and comments.
+ * Single Data Source of Truth of this whole Application.
+ *
+ * @author trile
+ * @since 5/22/18 at 11:54
  */
 public class DataRepository {
     public static final String TAG = DataRepository.class.getSimpleName();
@@ -29,7 +32,8 @@ public class DataRepository {
         mMangaNetworkDataSource = mangaNetworkDataSource;
         mExecutors = executors;
 
-        LiveData<List<MangaItemEntity>> networkData = mMangaNetworkDataSource.getDownloadedMangaItems();
+        LiveData<List<MangaItemEntity>> networkData =
+                mMangaNetworkDataSource.getDownloadedMangaItems();
         networkData.observeForever(newMangaItemsFromNetwork ->
                 mExecutors.diskIO().execute(() ->
                         mDatabase.mangaItemDAO().insertAll(newMangaItemsFromNetwork)
@@ -54,7 +58,8 @@ public class DataRepository {
     }
 
     /**
-     * Get the list of manga items from the database and get notified when the data changes.
+     * Expose this LiveData (list of all manga items from the database) for others
+     * and get notified when the local data changes.
      */
     public LiveData<List<MangaItemEntity>> getAllMangaItems() {
         initializeData();

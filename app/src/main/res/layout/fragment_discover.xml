@@ -58,7 +58,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <com.example.trile.poc.customview.CustomViewPager
+        <com.example.trile.poc.ui.customview.CustomViewPager
             android:id="@+id/fragment_discover_view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

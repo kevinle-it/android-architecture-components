@@ -15,16 +15,19 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.trile.poc.R;
-import com.example.trile.poc.adapter.MangaItemAdapter;
 import com.example.trile.poc.databinding.FragmentDiscoverAllBinding;
-import com.example.trile.poc.helper.InjectorUtils;
-import com.example.trile.poc.listener.EndlessRecyclerViewScrollListener;
-import com.example.trile.poc.listener.OnMangaListInteractionListener;
+import com.example.trile.poc.ui.adapter.MangaItemAdapter;
+import com.example.trile.poc.ui.helper.InjectorUtils;
+import com.example.trile.poc.ui.listener.EndlessRecyclerViewScrollListener;
+import com.example.trile.poc.ui.listener.OnMangaListInteractionListener;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DiscoverAllFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * @author trile
+ * @since 5/22/18 at 14:11
  */
 public class DiscoverAllFragment extends Fragment {
 
@@ -66,7 +69,8 @@ public class DiscoverAllFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_discover_all, container, false);
+        mBinding = DataBindingUtil
+                .inflate(inflater, R.layout.fragment_discover_all, container, false);
 
         mSwipeRefreshContainer = mBinding.fragmentDiscoverAllSwipeRefreshContainer;
         mSwipeRefreshContainer.setColorSchemeResources(
@@ -82,8 +86,10 @@ public class DiscoverAllFragment extends Fragment {
 
         mRecyclerView = mBinding.fragmentDiscoverAllList;
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), mColumnCount);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
-                gridLayoutManager.getOrientation());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                mRecyclerView.getContext(),
+                gridLayoutManager.getOrientation()
+        );
 
         mRecyclerView.setLayoutManager(gridLayoutManager);
 //            mRecyclerView.addItemDecoration(dividerItemDecoration);
@@ -103,7 +109,9 @@ public class DiscoverAllFragment extends Fragment {
         mRecyclerView.setAdapter(mMangaItemAdapter);
         showLoading();
 
-        mViewModel = ViewModelProviders.of(this, InjectorUtils.provideDiscoverAllViewModelFactory(getContext())).get(DiscoverAllViewModel.class);
+        mViewModel = ViewModelProviders
+                .of(this, InjectorUtils.provideDiscoverAllViewModelFactory(getContext()))
+                .get(DiscoverAllViewModel.class);
         mViewModel.getAllMangaItems().observe(this, mangaItems -> {
             mMangaItemAdapter.setMangaList(mangaItems);
             showMangaItemView();

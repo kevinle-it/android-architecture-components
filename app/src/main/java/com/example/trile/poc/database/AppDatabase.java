@@ -16,6 +16,12 @@ import com.example.trile.poc.database.entity.MangaItemEntity;
 
 import java.util.List;
 
+/**
+ * Provides an API for handling all local database operations.
+ *
+ * @author trile
+ * @since 5/22/18 at 11:47
+ */
 @Database(entities = {MangaItemEntity.class, MangaDetailEntity.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -40,7 +46,17 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (AppDatabase.class) {
                 if (sInstance == null) {
 //                    sInstance = buildDatabase(context.getApplicationContext(), executors);
-                    sInstance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DATABASE_NAME).build();
+                    /**
+                     * Build the database. {@link Builder#build()} only sets up the
+                     * database configuration and creates a new instance of the database.
+                     * The SQLite database is only created when it's accessed for the first time.
+                     */
+                    sInstance = Room.databaseBuilder
+                            (
+                                    context.getApplicationContext(),
+                                    AppDatabase.class,
+                                    DATABASE_NAME
+                            ).build();
                     sInstance.setExecutors(executors);
                     sInstance.updateDatabaseCreated(context.getApplicationContext());
                 }
@@ -48,34 +64,6 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return sInstance;
     }
-
-//    /**
-//     * Build the database. {@link Builder#build()} only sets up the database configuration and
-//     * creates a new instance of the database.
-//     * The SQLite database is only created when it's accessed for the first time.
-//     */
-//    private static AppDatabase buildDatabase(final Context appContext,
-//                                             final AppExecutors executors) {
-//        return Room.databaseBuilder(appContext, AppDatabase.class, DATABASE_NAME)
-//                .addCallback(new Callback() {
-//                    @Override
-//                    public void onCreate(@NonNull SupportSQLiteDatabase db) {
-//                        super.onCreate(db);
-//                        executors.diskIO().execute(() -> {
-//                            // Add a delay to simulate a long-running operation
-//                            addDelay();
-//                            // Generate the data for pre-population
-//                            AppDatabase database = AppDatabase.getInstance(appContext, executors);
-//                            List<MangaItemEntity> mangaItemEntities = DataGenerator.generateMangaItems();
-//                            List<MangaDetailEntity> mangaDetailEntities = DataGenerator.generateMangaDetails();
-//
-//                            insertData(database, mangaItemEntities, mangaDetailEntities);
-//                            // notify that the database was created and it's ready to be used
-//                            database.setDatabaseCreated();
-//                        });
-//                    }
-//                }).build();
-//    }
 
     /**
      * Check whether the database already exists and expose it via {@link #getDatabaseCreated()}
@@ -94,7 +82,8 @@ public abstract class AppDatabase extends RoomDatabase {
         mIsDatabaseCreated.postValue(true);
     }
 
-    private static void insertData(final AppDatabase database, final List<MangaItemEntity> mangaItemEntities,
+    private static void insertData(final AppDatabase database,
+                                   final List<MangaItemEntity> mangaItemEntities,
                                    final List<MangaDetailEntity> mangaDetailEntities) {
         database.runInTransaction(() -> {
             database.mangaItemDAO().insertAll(mangaItemEntities);
@@ -102,13 +91,14 @@ public abstract class AppDatabase extends RoomDatabase {
         });
     }
 
-//    private static void addDelay() {
-//        try {
-//            Thread.sleep(4000);
-//        } catch (InterruptedException ignored) {
-//        }
-//    }
-
+    /**
+     * Expose this for others to get notified immediately when the database has just been created.
+     * Others access this Live Data can only observe for the changes and cannot change the data and
+     * can neither {@link MutableLiveData#setValue(Object)}
+     * nor {@link MutableLiveData#postValue(Object)}.
+     *
+     * @return Live Data for others to observe the changes.
+     */
     public LiveData<Boolean> getDatabaseCreated() {
         return mIsDatabaseCreated;
     }

@@ -10,6 +10,10 @@ import com.example.trile.poc.database.entity.MangaItemEntity;
 
 import java.util.List;
 
+/**
+ * @author trile
+ * @since 5/22/18 at 14:07
+ */
 @Dao
 public interface MangaItemDAO {
     @Query("SELECT * FROM MangaItemEntity")

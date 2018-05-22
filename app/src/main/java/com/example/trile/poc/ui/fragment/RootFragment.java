@@ -7,15 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.trile.poc.Constants;
 import com.example.trile.poc.R;
-import com.example.trile.poc.helper.Constants;
-import com.example.trile.poc.listener.OnMangaListInteractionListener;
 import com.example.trile.poc.ui.fragment.discover.DiscoverFragment;
+import com.example.trile.poc.ui.listener.OnMangaListInteractionListener;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RootFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * @author trile
+ * @since 5/22/18 at 14:15
  */
 public class RootFragment extends Fragment {
     private int viewPagerIndex;
@@ -46,7 +49,8 @@ public class RootFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            viewPagerIndex = getArguments().getInt(Constants.ROOT_FRAGMENT_VIEW_PAGER_INDEX_PARAM, 0);
+            viewPagerIndex = getArguments()
+                    .getInt(Constants.ROOT_FRAGMENT_VIEW_PAGER_INDEX_PARAM, 0);
         }
     }
 
@@ -62,35 +66,46 @@ public class RootFragment extends Fragment {
         switch (viewPagerIndex) {
             case Constants.VIEW_PAGER_INDEX_DISCOVER:
                 fragment = DiscoverFragment.newInstance();
-                ((DiscoverFragment) fragment).setNavigationOnClickListener(mNavigationToolbarButtonOnClickListener);
-                ((DiscoverFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
+                ((DiscoverFragment) fragment)
+                        .setNavigationOnClickListener(mNavigationToolbarButtonOnClickListener);
+                ((DiscoverFragment) fragment)
+                        .setMangaListInteractionListener(mMangaListInteractionListener);
                 transaction.replace(R.id.root_container, fragment);
                 break;
             case Constants.VIEW_PAGER_INDEX_FAVORITES:
                 fragment = DiscoverFragment.newInstance();
-                ((DiscoverFragment) fragment).setNavigationOnClickListener(mNavigationToolbarButtonOnClickListener);
-                ((DiscoverFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
+                ((DiscoverFragment) fragment)
+                        .setNavigationOnClickListener(mNavigationToolbarButtonOnClickListener);
+                ((DiscoverFragment) fragment)
+                        .setMangaListInteractionListener(mMangaListInteractionListener);
                 transaction.replace(R.id.root_container, fragment);
 //                fragment = FavoritesFragment.newInstance();
-//                ((FavoritesFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
+//                ((FavoritesFragment) fragment)
+//                        .setMangaListInteractionListener(mMangaListInteractionListener);
 //                transaction.replace(R.id.root_container, fragment);
                 break;
             case Constants.VIEW_PAGER_INDEX_RECENT:
                 fragment = DiscoverFragment.newInstance();
-                ((DiscoverFragment) fragment).setNavigationOnClickListener(mNavigationToolbarButtonOnClickListener);
-                ((DiscoverFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
+                ((DiscoverFragment) fragment)
+                        .setNavigationOnClickListener(mNavigationToolbarButtonOnClickListener);
+                ((DiscoverFragment) fragment)
+                        .setMangaListInteractionListener(mMangaListInteractionListener);
                 transaction.replace(R.id.root_container, fragment);
 //                fragment = RecentFragment.newInstance(1);
-//                ((RecentFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
+//                ((RecentFragment) fragment)
+//                        .setMangaListInteractionListener(mMangaListInteractionListener);
 //                transaction.replace(R.id.root_container, fragment);
                 break;
             case Constants.VIEW_PAGER_INDEX_DOWNLOADS:
                 fragment = DiscoverFragment.newInstance();
-                ((DiscoverFragment) fragment).setNavigationOnClickListener(mNavigationToolbarButtonOnClickListener);
-                ((DiscoverFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
+                ((DiscoverFragment) fragment)
+                        .setNavigationOnClickListener(mNavigationToolbarButtonOnClickListener);
+                ((DiscoverFragment) fragment)
+                        .setMangaListInteractionListener(mMangaListInteractionListener);
                 transaction.replace(R.id.root_container, fragment);
 //                fragment = DownloadsFragment.newInstance();
-//                ((DownloadsFragment) fragment).setMangaListInteractionListener(mMangaListInteractionListener);
+//                ((DownloadsFragment) fragment)
+//                        .setMangaListInteractionListener(mMangaListInteractionListener);
 //                transaction.replace(R.id.root_container, fragment);
                 break;
         }

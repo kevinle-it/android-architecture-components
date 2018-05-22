@@ -1,10 +1,7 @@
-package com.example.trile.poc.adapter;
+package com.example.trile.poc.ui.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
@@ -14,15 +11,20 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.trile.poc.R;
 import com.example.trile.poc.database.model.MangaItem;
 import com.example.trile.poc.databinding.MangaItemBinding;
-import com.example.trile.poc.listener.OnMangaListInteractionListener;
+import com.example.trile.poc.ui.listener.OnMangaListInteractionListener;
 
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Adapter for Manga Item showing on Discover, Favorites & Downloads Tabs.
+ *
+ * @author trile
+ * @since 5/22/18 at 13:59
+ */
 public class MangaItemAdapter extends RecyclerView.Adapter<MangaItemAdapter.MangaItemViewHolder> {
 
     private final Context mContext;
@@ -107,7 +109,7 @@ public class MangaItemAdapter extends RecyclerView.Adapter<MangaItemAdapter.Mang
      * avoid using non-static inner class
      * watch here: https://www.youtube.com/watch?v=_CruQY55HOk
      */
-    public static class MangaItemViewHolder extends RecyclerView.ViewHolder {
+    public class MangaItemViewHolder extends RecyclerView.ViewHolder {
 
         final MangaItemBinding mBinding;
 

@@ -6,6 +6,10 @@ import android.arch.persistence.room.PrimaryKey;
 import com.example.trile.poc.database.model.MangaItem;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * @author trile
+ * @since 5/22/18 at 14:07
+ */
 @Entity
 public class MangaItemEntity implements MangaItem {
 
@@ -38,7 +42,8 @@ public class MangaItemEntity implements MangaItem {
         Author = mangaItem.getAuthor();
     }
 
-    //    public MangaItemEntity(String title, String author, boolean favorited, String recentEpisode, Long readStartTime, Long readElapsedTime, int numChapterDownloaded) {
+//    public MangaItemEntity(String title, String author, boolean favorited, String recentEpisode,
+//                           Long readStartTime, Long readElapsedTime, int numChapterDownloaded) {
 //        this.Title = title;
 //        this.Author = author;
 //        this.Favorited = favorited;

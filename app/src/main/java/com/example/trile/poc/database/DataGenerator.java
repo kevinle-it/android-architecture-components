@@ -23,7 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Generates data to pre-populate the database
+ * Generates data to pre-populate the database.
+ *
+ * @author trile
+ * @since 5/22/18 at 14:09
  */
 public class DataGenerator {
 

@@ -6,6 +6,10 @@ import android.arch.persistence.room.PrimaryKey;
 
 import com.example.trile.poc.database.model.MangaDetail;
 
+/**
+ * @author trile
+ * @since 5/22/18 at 14:07
+ */
 @Entity(foreignKeys = {
             @ForeignKey( entity = MangaItemEntity.class,
                     parentColumns = "Id",

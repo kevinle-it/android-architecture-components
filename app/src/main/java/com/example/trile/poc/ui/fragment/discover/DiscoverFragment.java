@@ -13,16 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.trile.poc.R;
-import com.example.trile.poc.adapter.ViewPagerAdapter;
-import com.example.trile.poc.customview.CustomViewPager;
 import com.example.trile.poc.databinding.FragmentDiscoverBinding;
-import com.example.trile.poc.listener.OnMangaListInteractionListener;
+import com.example.trile.poc.ui.adapter.ViewPagerAdapter;
+import com.example.trile.poc.ui.customview.CustomViewPager;
 import com.example.trile.poc.ui.fragment.discover.all.DiscoverAllFragment;
+import com.example.trile.poc.ui.listener.OnMangaListInteractionListener;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DiscoverFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * @author trile
+ * @since 5/22/18 at 14:13
  */
 public class DiscoverFragment extends Fragment {
 
@@ -56,10 +59,13 @@ public class DiscoverFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_discover, container, false);
+        mBinding = DataBindingUtil
+                .inflate(inflater, R.layout.fragment_discover, container, false);
 
         mToolbar = mBinding.fragmentDiscoverToolbar;
-        mToolbar.setNavigationIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_menu_black_24dp));
+        mToolbar.setNavigationIcon(
+                ContextCompat.getDrawable(getContext(), R.drawable.ic_menu_black_24dp)
+        );
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.manga_rock);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
@@ -70,8 +76,13 @@ public class DiscoverFragment extends Fragment {
         mTabLayout = mBinding.fragmentDiscoverTabLayout;
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.discover_all));
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.discover_latest));
-        mTabLayout.setTabTextColors(ContextCompat.getColor(getContext(), R.color.textMuted), ContextCompat.getColor(getContext(), R.color.colorSecondary));
-        mTabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(getContext(), R.color.colorSecondary));
+        mTabLayout.setTabTextColors(
+                ContextCompat.getColor(getContext(), R.color.textMuted),
+                ContextCompat.getColor(getContext(), R.color.colorSecondary)
+        );
+        mTabLayout.setSelectedTabIndicatorColor(
+                ContextCompat.getColor(getContext(), R.color.colorSecondary)
+        );
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

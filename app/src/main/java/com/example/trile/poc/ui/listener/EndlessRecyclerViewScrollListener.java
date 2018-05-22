@@ -1,4 +1,4 @@
-package com.example.trile.poc.listener;
+package com.example.trile.poc.ui.listener;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -6,9 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
 /**
- * Created by lmtri on 6/3/2017.
+ * Custom Paging for Recycler View.
+ *
+ * @author trile
+ * @since 5/22/18 at 14:17
  */
-
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener{
     public static final String TAG = EndlessRecyclerViewScrollListener.class.getSimpleName();
     // The minimum amount of items to have below your current scroll position
@@ -61,13 +63,16 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         int totalItemCount = mLayoutManager.getItemCount();
 
         if (mLayoutManager instanceof StaggeredGridLayoutManager) {
-            int[] lastVisibleItemPositions = ((StaggeredGridLayoutManager) mLayoutManager).findLastVisibleItemPositions(null);
+            int[] lastVisibleItemPositions = ((StaggeredGridLayoutManager) mLayoutManager)
+                    .findLastVisibleItemPositions(null);
             // get maximum element within the list
             lastVisibleItemPosition = getLastVisibleItem(lastVisibleItemPositions);
         } else if (mLayoutManager instanceof GridLayoutManager) {
-            lastVisibleItemPosition = ((GridLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+            lastVisibleItemPosition = ((GridLayoutManager) mLayoutManager)
+                    .findLastVisibleItemPosition();
         } else if (mLayoutManager instanceof LinearLayoutManager) {
-            lastVisibleItemPosition = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
+            lastVisibleItemPosition = ((LinearLayoutManager) mLayoutManager)
+                    .findLastVisibleItemPosition();
         }
 
         // If the total item count is zero and the previous isn't, assume the

@@ -9,8 +9,8 @@
     </data>
 
     <android.support.v7.widget.CardView
-        android:layout_width="100dp"
-        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         app:cardCornerRadius="@dimen/manga_item_corner_radius"
         app:cardPreventCornerOverlap="false"
@@ -18,9 +18,9 @@
         app:cardElevation="@dimen/manga_item_elevation">
 
         <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:background="@drawable/ripple_effect_gray">
 
             <ImageView
@@ -31,48 +31,56 @@
                 android:background="@color/colorPrimaryDark"/>
 
             <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/manga_info_height"
-                android:gravity="center_vertical">
+                android:padding="@dimen/manga_info_padding">
 
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                     <TextView
                         android:id="@+id/manga_title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/manga_info_margin"
-                        android:layout_marginTop="@dimen/manga_info_margin"
-                        android:layout_marginBottom="@dimen/manga_title_subtitle_margin"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:includeFontPadding="false"
                         android:maxLines="2"
                         android:ellipsize="end"
                         android:text="@{manga.Title}"
+                        android:textSize="@dimen/manga_title_text_size"
+                        android:textColor="@color/textColorPrimary"
                         tools:text="Manga Name"/>
 
-                    <ImageView
-                        android:id="@+id/secondary_action"
-                        android:layout_width="@dimen/manga_item_secondary_action_size"
-                        android:layout_height="@dimen/manga_item_secondary_action_size"
-                        android:layout_marginStart="@dimen/manga_info_margin"
-                        android:layout_marginTop="@dimen/manga_info_margin"
-                        android:layout_marginEnd="@dimen/manga_info_margin"
-                        android:src="@drawable/ic_more_vert_black_24dp"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/manga_title_subtitle_space"/>
+
+                    <TextView
+                        android:id="@+id/manga_subtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:text="@{manga.Author}"
+                        android:textSize="@dimen/manga_subtitle_text_size"
+                        tools:text="Author"/>
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/manga_subtitle"
+                <ImageView
+                    android:id="@+id/secondary_action"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/manga_info_margin"
-                    android:layout_marginBottom="@dimen/manga_info_margin"
-                    android:text="@{manga.Author}"
-                    tools:text="Author"/>
+                    android:layout_height="@dimen/manga_item_secondary_action_height"
+                    android:paddingLeft="@dimen/manga_item_secondary_action_left_padding"
+                    android:layout_gravity="end"
+                    android:src="@drawable/ic_more_vert"
+                    android:tint="@color/textMuted"/>
 
             </LinearLayout>
 

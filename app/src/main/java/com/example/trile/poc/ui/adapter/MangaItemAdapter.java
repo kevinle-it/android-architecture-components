@@ -29,13 +29,17 @@ public class MangaItemAdapter extends RecyclerView.Adapter<MangaItemAdapter.Mang
 
     private final Context mContext;
     List<? extends MangaItem> mMangaList;
+    private final int mMangaItemImageHeight;
 
     @Nullable
     private final OnMangaListInteractionListener mListener;
 
-    public MangaItemAdapter(final Context context, @Nullable OnMangaListInteractionListener listener) {
+    public MangaItemAdapter(final Context context,
+                            @Nullable OnMangaListInteractionListener listener,
+                            final int mangaItemImageHeight) {
         mContext = context;
         mListener = listener;
+        mMangaItemImageHeight = mangaItemImageHeight;
     }
 
     public void setMangaList(final List<? extends MangaItem> mangaList) {
@@ -80,16 +84,14 @@ public class MangaItemAdapter extends RecyclerView.Adapter<MangaItemAdapter.Mang
         MangaItemBinding binding = DataBindingUtil
                 .inflate(LayoutInflater.from(parent.getContext()), R.layout.manga_item,
                         parent, false);
-        return new MangaItemViewHolder(binding);
+        return new MangaItemViewHolder(binding, mMangaItemImageHeight);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MangaItemViewHolder holder, int position) {
-        RequestOptions options = new RequestOptions();
-        options.fitCenter();
         Glide.with(mContext)
                 .load(R.drawable.dragonball_poster)
-                .apply(options)
+                .apply(new RequestOptions().fitCenter())
                 .into(holder.mBinding.mangaImage);
         holder.mBinding.setManga(mMangaList.get(position));
         holder.mBinding.getRoot().setOnClickListener(v -> {
@@ -109,13 +111,15 @@ public class MangaItemAdapter extends RecyclerView.Adapter<MangaItemAdapter.Mang
      * avoid using non-static inner class
      * watch here: https://www.youtube.com/watch?v=_CruQY55HOk
      */
-    public class MangaItemViewHolder extends RecyclerView.ViewHolder {
+    public static class MangaItemViewHolder extends RecyclerView.ViewHolder {
 
         final MangaItemBinding mBinding;
 
-        public MangaItemViewHolder(MangaItemBinding mBinding) {
+        public MangaItemViewHolder(MangaItemBinding mBinding, final int mangaItemImageHeight) {
             super(mBinding.getRoot());
             this.mBinding = mBinding;
+
+            mBinding.mangaImage.getLayoutParams().height = mangaItemImageHeight;
         }
     }
 }

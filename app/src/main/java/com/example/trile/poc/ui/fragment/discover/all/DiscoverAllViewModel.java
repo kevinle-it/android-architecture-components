@@ -11,8 +11,8 @@ import com.example.trile.poc.repository.DataRepository;
 import java.util.List;
 
 /**
- * View Model for Discover All Fragment to retain data (the Repository & List of Manga Items)
- * on configuration changes.
+ * {@link ViewModel} for {@link DiscoverAllFragment} to retain data
+ * (the Repository & List of Manga Items) on configuration changes.
  *
  * @author trile
  * @since 5/22/18 at 14:11

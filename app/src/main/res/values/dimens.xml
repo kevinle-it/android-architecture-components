@@ -9,13 +9,21 @@
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">10sp</dimen>
 
+    <!--Recycler Grid View-->
+    <dimen name="recycler_grid_view_item_spacing">4dp</dimen>
+    <dimen name="recycler_grid_view_padding">4dp</dimen>
+
     <!--Manga Item-->
+    <dimen name="manga_item_min_width">109dp</dimen>
     <dimen name="manga_item_corner_radius">2dp</dimen>
     <dimen name="manga_item_elevation">1dp</dimen>
     <dimen name="manga_info_height">66dp</dimen>
-    <dimen name="manga_info_margin">8dp</dimen>
-    <dimen name="manga_title_subtitle_margin">4dp</dimen>
-    <dimen name="manga_item_secondary_action_size">16dp</dimen>
+    <dimen name="manga_info_padding">8dp</dimen>
+    <dimen name="manga_title_subtitle_space">4dp</dimen>
+    <dimen name="manga_title_text_size">13sp</dimen>
+    <dimen name="manga_subtitle_text_size">11sp</dimen>
+    <dimen name="manga_item_secondary_action_height">16dp</dimen>
+    <dimen name="manga_item_secondary_action_left_padding">6dp</dimen>
 
     <!--Loading Indicator-->
     <dimen name="circular_progress_size">42dp</dimen>

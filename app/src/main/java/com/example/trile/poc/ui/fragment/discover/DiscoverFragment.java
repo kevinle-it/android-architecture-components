@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.example.trile.poc.databinding.FragmentDiscoverBinding;
 import com.example.trile.poc.ui.adapter.ViewPagerAdapter;
 import com.example.trile.poc.ui.customview.CustomViewPager;
 import com.example.trile.poc.ui.fragment.discover.all.DiscoverAllFragment;
+import com.example.trile.poc.ui.helper.RecyclerGridViewHelper;
 import com.example.trile.poc.ui.listener.OnMangaListInteractionListener;
 
 /**
@@ -106,11 +108,12 @@ public class DiscoverFragment extends Fragment {
 
         mViewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
 
-        Fragment fragment1 = DiscoverAllFragment.newInstance(3);
+        Pair<Integer, Integer> pair = RecyclerGridViewHelper.calculateFitScreenSpanCount(getContext());
+        Fragment fragment1 = DiscoverAllFragment.newInstance(pair.first, pair.second);
         ((DiscoverAllFragment) fragment1).setMangaListInteractionListener(mMangaListListener);
         mViewPagerAdapter.addFragment(fragment1);
 
-        Fragment fragment2 = DiscoverAllFragment.newInstance(3);
+        Fragment fragment2 = DiscoverAllFragment.newInstance(pair.first, pair.second);
         ((DiscoverAllFragment) fragment2).setMangaListInteractionListener(mMangaListListener);
         mViewPagerAdapter.addFragment(fragment2);
 

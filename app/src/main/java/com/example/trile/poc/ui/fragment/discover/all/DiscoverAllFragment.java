@@ -18,6 +18,7 @@ import com.example.trile.poc.R;
 import com.example.trile.poc.databinding.FragmentDiscoverAllBinding;
 import com.example.trile.poc.ui.adapter.MangaItemAdapter;
 import com.example.trile.poc.ui.helper.InjectorUtils;
+import com.example.trile.poc.ui.helper.RecyclerViewSpacesItemDecoration;
 import com.example.trile.poc.ui.listener.EndlessRecyclerViewScrollListener;
 import com.example.trile.poc.ui.listener.OnMangaListInteractionListener;
 
@@ -32,7 +33,9 @@ import com.example.trile.poc.ui.listener.OnMangaListInteractionListener;
 public class DiscoverAllFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String ARG_MANGA_ITEM_HEIGHT = "manga-item-height";
     private int mColumnCount = 1;
+    private int mMangaItemImageHeight = 164;
 
     private FragmentDiscoverAllBinding mBinding;
 
@@ -49,10 +52,11 @@ public class DiscoverAllFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static DiscoverAllFragment newInstance(int columnCount) {
+    public static DiscoverAllFragment newInstance(int columnCount, int mangaItemImageHeight) {
         DiscoverAllFragment fragment = new DiscoverAllFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putInt(ARG_MANGA_ITEM_HEIGHT, mangaItemImageHeight);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,6 +66,7 @@ public class DiscoverAllFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            mMangaItemImageHeight = getArguments().getInt(ARG_MANGA_ITEM_HEIGHT);
         }
     }
 
@@ -92,6 +97,8 @@ public class DiscoverAllFragment extends Fragment {
         );
 
         mRecyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.addItemDecoration(new RecyclerViewSpacesItemDecoration(getResources()
+                .getDimensionPixelSize(R.dimen.recycler_grid_view_item_spacing)));
 //            mRecyclerView.addItemDecoration(dividerItemDecoration);
         // Retain an instance so that you can call `resetState()` for fresh searches
         mRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
@@ -103,7 +110,7 @@ public class DiscoverAllFragment extends Fragment {
             }
         };
 
-        mMangaItemAdapter = new MangaItemAdapter(getContext(), mListener);
+        mMangaItemAdapter = new MangaItemAdapter(getContext(), mListener, mMangaItemImageHeight);
 
         mRecyclerView.addOnScrollListener(mRecyclerViewScrollListener);
         mRecyclerView.setAdapter(mMangaItemAdapter);

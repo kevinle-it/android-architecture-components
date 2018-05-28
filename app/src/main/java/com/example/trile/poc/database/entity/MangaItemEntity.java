@@ -2,6 +2,7 @@ package com.example.trile.poc.database.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.v7.util.DiffUtil;
 
 import com.example.trile.poc.database.model.MangaItem;
 import com.google.gson.annotations.SerializedName;
@@ -21,6 +22,8 @@ public class MangaItemEntity implements MangaItem {
     private String Title;
     @SerializedName("author")
     private String Author;
+    @SerializedName("rank")
+    private int Rank;
 //    private boolean Favorited = false;
 //    private String RecentEpisode = "";
 //    private Long ReadStartTime = -1L;
@@ -30,16 +33,18 @@ public class MangaItemEntity implements MangaItem {
     public MangaItemEntity() {
     }
 
-    public MangaItemEntity(int id, String title, String author) {
+    public MangaItemEntity(int id, String title, String author, int rank) {
         Id = id;
         Title = title;
         Author = author;
+        Rank = rank;
     }
 
     public MangaItemEntity(MangaItem mangaItem) {
         Id = mangaItem.getId();
         Title = mangaItem.getTitle();
         Author = mangaItem.getAuthor();
+        Rank = mangaItem.getRank();
     }
 
 //    public MangaItemEntity(String title, String author, boolean favorited, String recentEpisode,
@@ -79,7 +84,12 @@ public class MangaItemEntity implements MangaItem {
         return Author;
     }
 
-//    @Override
+    @Override
+    public int getRank() {
+        return Rank;
+    }
+
+    //    @Override
 //    public boolean getFavorited() {
 //        return Favorited;
 //    }
@@ -116,7 +126,11 @@ public class MangaItemEntity implements MangaItem {
         Author = author;
     }
 
-//    public void setFavorited(boolean favorited) {
+    public void setRank(int rank) {
+        Rank = rank;
+    }
+
+    //    public void setFavorited(boolean favorited) {
 //        Favorited = favorited;
 //    }
 //

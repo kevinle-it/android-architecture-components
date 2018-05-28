@@ -10,6 +10,7 @@ public interface MangaItem {
     int getId();
     String getTitle();
     String getAuthor();
+    int getRank();
 //    boolean getFavorited();
 //    String getRecentEpisode();
 //    Long getReadStartTime();

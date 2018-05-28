@@ -22,7 +22,7 @@ import java.util.List;
  * @author trile
  * @since 5/22/18 at 11:47
  */
-@Database(entities = {MangaItemEntity.class, MangaDetailEntity.class}, version = 1)
+@Database(entities = {MangaItemEntity.class, MangaDetailEntity.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase sInstance;

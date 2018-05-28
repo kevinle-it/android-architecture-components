@@ -1,6 +1,8 @@
 package com.example.trile.poc.repository;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.LivePagedListBuilder;
+import android.arch.paging.PagedList;
 
 import com.example.trile.poc.AppExecutors;
 import com.example.trile.poc.api.service.MangaNetworkDataSource;
@@ -61,9 +63,24 @@ public class DataRepository {
      * Expose this LiveData (list of all manga items from the database) for others
      * and get notified when the local data changes.
      */
-    public LiveData<List<MangaItemEntity>> getAllMangaItems() {
+    public LiveData<PagedList<MangaItemEntity>> getAllMangaItems() {
         initializeData();
-        return mDatabase.mangaItemDAO().loadAllMangaItems();
+
+        PagedList.Config pagedListConfig = (new PagedList.Config.Builder())
+                .setEnablePlaceholders(true)    // PagedList will present null placeholders
+                                                // for not-yet-loaded content.
+                                                // This means its DataSource (returned by
+                                                // mangaItemDAO().loadAllMangaItems()) can count all
+                                                // unloaded items (so that the number of nulls
+                                                // to present is known).
+                .setPrefetchDistance(60)
+                .setPageSize(20)
+                .build();
+
+        return new LivePagedListBuilder(
+                mDatabase.mangaItemDAO().loadAllMangaItems(),
+                pagedListConfig
+        ).build();
     }
 
     public LiveData<MangaItemEntity> loadMangaItemById(final int mangaItemId) {

@@ -2,6 +2,7 @@ package com.example.trile.poc.ui.fragment.discover.all;
 
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -141,7 +142,12 @@ public class DiscoverAllFragment extends Fragment {
                 .of(this, InjectorUtils.provideDiscoverAllViewModelFactory(getContext()))
                 .get(DiscoverAllViewModel.class);
         mViewModel.getAllMangaItems().observe(this, mangaItems -> {
-            mMangaItemAdapter.setMangaList(mangaItems);
+            /**
+             * Use {@link android.arch.paging.PagedListAdapter#submitList(PagedList)} rather than
+             * the old custom setMangaList() for the Paging Library to handle the comparison between
+             * the oldList & newList in its super constructor.
+             */
+            mMangaItemAdapter.submitList(mangaItems);
             showMangaItemView();
         });
 

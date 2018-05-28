@@ -1,6 +1,7 @@
 package com.example.trile.poc.database.dao;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.paging.DataSource;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -16,8 +17,8 @@ import java.util.List;
  */
 @Dao
 public interface MangaItemDAO {
-    @Query("SELECT * FROM MangaItemEntity LIMIT 500")
-    LiveData<List<MangaItemEntity>> loadAllMangaItems();
+    @Query("SELECT * FROM MangaItemEntity ORDER BY Rank ASC LIMIT 500")
+    DataSource.Factory<Integer, MangaItemEntity> loadAllMangaItems();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<MangaItemEntity> mangaItems);

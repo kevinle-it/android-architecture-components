@@ -12,6 +12,9 @@
     <!--Recycler Grid View-->
     <dimen name="recycler_grid_view_item_spacing">4dp</dimen>
     <dimen name="recycler_grid_view_padding">4dp</dimen>
+    <dimen name="recycler_grid_view_fast_scroller_thumb_height">50dp</dimen>
+    <dimen name="recycler_grid_view_fast_scroller_thumb_text_width">50dp</dimen>
+    <dimen name="recycler_grid_view_fast_scroller_thumb_text_height">30dp</dimen>
 
     <!--Manga Item-->
     <dimen name="manga_item_min_width">109dp</dimen>

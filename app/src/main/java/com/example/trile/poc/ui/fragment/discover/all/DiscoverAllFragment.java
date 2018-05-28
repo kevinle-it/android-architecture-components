@@ -3,8 +3,11 @@ package com.example.trile.poc.ui.fragment.discover.all;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,6 +20,7 @@ import android.widget.ProgressBar;
 import com.example.trile.poc.R;
 import com.example.trile.poc.databinding.FragmentDiscoverAllBinding;
 import com.example.trile.poc.ui.adapter.MangaItemAdapter;
+import com.example.trile.poc.ui.helper.CustomFastScroller;
 import com.example.trile.poc.ui.helper.InjectorUtils;
 import com.example.trile.poc.ui.helper.RecyclerViewSpacesItemDecoration;
 import com.example.trile.poc.ui.listener.EndlessRecyclerViewScrollListener;
@@ -99,7 +103,7 @@ public class DiscoverAllFragment extends Fragment {
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.addItemDecoration(new RecyclerViewSpacesItemDecoration(getResources()
                 .getDimensionPixelSize(R.dimen.recycler_grid_view_item_spacing)));
-//            mRecyclerView.addItemDecoration(dividerItemDecoration);
+        // mRecyclerView.addItemDecoration(dividerItemDecoration);
         // Retain an instance so that you can call `resetState()` for fresh searches
         mRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
@@ -109,6 +113,23 @@ public class DiscoverAllFragment extends Fragment {
 //                loadMoreOlderHousingsFromApi(page);
             }
         };
+        StateListDrawable verticalThumbDrawable = (StateListDrawable) ContextCompat.getDrawable
+                (getContext(), R.drawable.thumb_drawable);
+        Drawable verticalTrackDrawable = ContextCompat.getDrawable(getContext(), R.drawable
+                .line_drawable);
+        StateListDrawable horizontalThumbDrawable = (StateListDrawable) ContextCompat.getDrawable
+                (getContext(), R.drawable.thumb_drawable);
+        Drawable horizontalTrackDrawable = ContextCompat.getDrawable(getContext(), R.drawable
+                .line_drawable);
+        int defaultWidth = getResources().getDimensionPixelSize(android.support.v7.recyclerview.R.dimen
+                .fastscroll_default_thickness);
+        int scrollbarMinimumRange = getResources().getDimensionPixelSize(android.support.v7.recyclerview.R.dimen
+                .fastscroll_minimum_range);
+        int margin = getResources().getDimensionPixelOffset(android.support.v7.recyclerview.R.dimen
+                .fastscroll_margin);
+        new CustomFastScroller(getContext(), mRecyclerView, verticalThumbDrawable,
+                verticalTrackDrawable, horizontalThumbDrawable, horizontalTrackDrawable,
+                defaultWidth, scrollbarMinimumRange, margin);
 
         mMangaItemAdapter = new MangaItemAdapter(getContext(), mListener, mMangaItemImageHeight);
 

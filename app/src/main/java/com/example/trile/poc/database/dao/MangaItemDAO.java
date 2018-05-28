@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Dao
 public interface MangaItemDAO {
-    @Query("SELECT * FROM MangaItemEntity")
+    @Query("SELECT * FROM MangaItemEntity LIMIT 500")
     LiveData<List<MangaItemEntity>> loadAllMangaItems();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

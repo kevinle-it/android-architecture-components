@@ -68,12 +68,9 @@ public class DiscoverFragment extends Fragment {
         mToolbar.setNavigationIcon(
                 ContextCompat.getDrawable(getContext(), R.drawable.ic_menu_black_24dp)
         );
-        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.manga_rock);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(true);
         mToolbar.setNavigationOnClickListener(mNavigationClickListener);
-
-
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mTabLayout = mBinding.fragmentDiscoverTabLayout;
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.discover_all));

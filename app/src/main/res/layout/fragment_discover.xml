@@ -26,12 +26,22 @@
                     android:id="@+id/fragment_discover_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?android:attr/actionBarSize"
-                    android:layout_gravity="top"
-                    android:layout_marginBottom="48dp"> <!--Make space for the below Tab Layout (TabLayout default height is 48dp) -> Avoid overlap to each other issue when collapsing-->
+                    android:layout_gravity="top">
+                    <!--android:layout_marginBottom="48dp"> Make space for the below Tab Layout (TabLayout default height is 48dp) -> Avoid overlap to each other issue when collapsing-->
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/fragment_housing_list_toolbar_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentStart="true"
+                            android:gravity="center"
+                            android:text="@string/manga_rock"
+                            android:textColor="@color/textColorPrimary"
+                            style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -45,16 +55,15 @@
 
                 </android.support.v7.widget.Toolbar>
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/fragment_discover_tab_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    app:tabIndicatorColor="@color/colorSecondary"
-                    app:tabSelectedTextColor="@color/colorSecondary"
-                    app:tabTextColor="@color/textMuted"/>
-
             </android.support.design.widget.CollapsingToolbarLayout>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/fragment_discover_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="@color/colorSecondary"
+                app:tabSelectedTextColor="@color/colorSecondary"
+                app:tabTextColor="@color/textMuted"/>
 
         </android.support.design.widget.AppBarLayout>
 

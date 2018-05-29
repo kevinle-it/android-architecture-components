@@ -16,6 +16,7 @@ import android.support.annotation.VisibleForTesting;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -327,21 +328,28 @@ public class CustomFastScroller extends RecyclerView.ItemDecoration
              * {@link RecyclerView} besides the thumb scroller.
              */
             canvas.translate(-mVerticalThumbTextWidth, 0);
-            mVerticalThumbDrawable.setBounds(0, 0, mVerticalThumbTextWidth, mVerticalThumbTextHeight);
-            mVerticalThumbDrawable.draw(canvas);
-            int position = ((GridLayoutManager) mRecyclerView.getLayoutManager())
-                    .findFirstCompletelyVisibleItemPosition() + 1;
-            // Only update the thumb text (showing first completely visible item position)
-            // if the position is a multiple of 20.
-            if (position % 20 == 0) {
-                mThumbTextItemPosition = position;
+            if (mState == STATE_DRAGGING) {
+                mVerticalThumbDrawable.setBounds(0, 0, mVerticalThumbTextWidth, mVerticalThumbTextHeight);
+                mVerticalThumbDrawable.draw(canvas);
+                
+                int offset = mRecyclerView.computeVerticalScrollOffset() *
+                        ((GridLayoutManager) mRecyclerView.getLayoutManager()).getSpanCount();
+
+                int itemHeight = mRecyclerView.getChildAt(0).getMeasuredHeight();
+
+                int position = offset / itemHeight;
+                // Only update the thumb text (showing first completely visible item position)
+                // if the position is a multiple of 20.
+                if (position % 20 == 0) {
+                    mThumbTextItemPosition = position;
+                }
+                String thumbTextPosition = Integer.toString(mThumbTextItemPosition);
+                float textWidth = mVerticalThumbTextPaint.measureText(thumbTextPosition);
+                canvas.drawText(thumbTextPosition,
+                        (mVerticalThumbTextWidth - textWidth) / 2f,
+                        mVerticalThumbTextHeight / 2f,
+                        mVerticalThumbTextPaint);
             }
-            String thumbTextPosition = String.valueOf(mThumbTextItemPosition);
-            float textWidth = mVerticalThumbTextPaint.measureText(thumbTextPosition);
-            canvas.drawText(thumbTextPosition,
-                    (mVerticalThumbTextWidth - textWidth) / 2f,
-                    mVerticalThumbTextHeight / 2f,
-                    mVerticalThumbTextPaint);
 
             canvas.translate(-left + mVerticalThumbTextWidth, -top);
         }

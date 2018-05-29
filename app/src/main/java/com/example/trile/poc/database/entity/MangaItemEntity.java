@@ -2,7 +2,6 @@ package com.example.trile.poc.database.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.support.v7.util.DiffUtil;
 
 import com.example.trile.poc.database.model.MangaItem;
 import com.google.gson.annotations.SerializedName;

@@ -11,8 +11,6 @@ import android.support.annotation.NonNull;
 import com.example.trile.poc.database.entity.MangaItemEntity;
 import com.example.trile.poc.repository.DataRepository;
 
-import java.util.List;
-
 /**
  * {@link ViewModel} for {@link DiscoverAllFragment} to retain data
  * (the Repository & List of Manga Items) on configuration changes.

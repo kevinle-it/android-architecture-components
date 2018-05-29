@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "834b50c5e0fdefae0b9d00c44c56a767",
+    "identityHash": "6331427bd95eb7a8c12e740259bcd0db",
     "entities": [
       {
         "tableName": "MangaItemEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER NOT NULL, `Title` TEXT, `Author` TEXT, `Rank` INTEGER NOT NULL, PRIMARY KEY(`Id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Id` INTEGER NOT NULL, `Name` TEXT, `Author` TEXT, `Rank` INTEGER NOT NULL, PRIMARY KEY(`Id`))",
         "fields": [
           {
             "fieldPath": "Id",
@@ -15,8 +15,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "Title",
-            "columnName": "Title",
+            "fieldPath": "Name",
+            "columnName": "Name",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -83,7 +83,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"834b50c5e0fdefae0b9d00c44c56a767\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"6331427bd95eb7a8c12e740259bcd0db\")"
     ]
   }
 }

@@ -14,6 +14,13 @@
     <string name="discover_all">ALL</string>
     <string name="discover_latest">LATEST</string>
 
+    <!--Discover All Tab-->
+    <string name="discover_all_tab_total_num_of_manga">%1$d manga</string>
+    <string name="discover_all_tab_sort_by">Sort by: %1$s</string>
+    <string name="discover_all_tab_sort_by_dialog_title">Sort By</string>
+    <string name="discover_all_tab_sort_by_name">Name</string>
+    <string name="discover_all_tab_sort_by_rank">Rank</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

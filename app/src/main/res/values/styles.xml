@@ -7,5 +7,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    
+    <style name="CustomAlertDialog" parent="Base.AlertDialog.AppCompat.Light">
+        <item name="colorAccent">@color/colorSecondary</item>
+    </style>
 
 </resources>

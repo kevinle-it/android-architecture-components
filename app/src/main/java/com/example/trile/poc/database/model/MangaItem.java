@@ -8,7 +8,7 @@ package com.example.trile.poc.database.model;
  */
 public interface MangaItem {
     int getId();
-    String getTitle();
+    String getName();
     String getAuthor();
     int getRank();
 //    boolean getFavorited();

@@ -1,5 +1,8 @@
 package com.example.trile.poc;
 
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.view.ViewPager;
+
 /**
  * Manga Rock's Constants.
  *
@@ -13,7 +16,9 @@ public class Constants {
     public static final int GET_ALL_MANGAS_MSID_CODE = 71;
     public static final String GET_ALL_MANGAS_COUNTRY_CODE = "Vietnam";
 
-    // Constants related to View Pager and Bottom Navigation View.
+    /**
+     * Constants related to {@link ViewPager} and {@link BottomNavigationView}.
+     */
     public static final int VIEW_PAGER_OFF_SCREEN_PAGE_LIMIT = 3;
     public static final int VIEW_PAGER_INDEX_DISCOVER = 0;
     public static final int VIEW_PAGER_INDEX_FAVORITES = 1;

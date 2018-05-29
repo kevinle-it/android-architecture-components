@@ -17,8 +17,12 @@ import java.util.List;
  */
 @Dao
 public interface MangaItemDAO {
-    @Query("SELECT * FROM MangaItemEntity ORDER BY Rank ASC LIMIT 500")
-    DataSource.Factory<Integer, MangaItemEntity> loadAllMangaItems();
+    @Query("SELECT * FROM MangaItemEntity ORDER BY " +
+            "CASE :orderBy " +
+            "WHEN 'Name' THEN Name " +
+            "WHEN 'Rank' THEN Rank " +
+            "END ASC LIMIT 500")
+    DataSource.Factory<Integer, MangaItemEntity> loadAllMangaItems(String orderBy);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<MangaItemEntity> mangaItems);

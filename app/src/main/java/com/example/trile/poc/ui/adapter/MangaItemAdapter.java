@@ -117,7 +117,7 @@ public class MangaItemAdapter
         @Override
         public boolean areContentsTheSame(MangaItemEntity oldItem, MangaItemEntity newItem) {
             return oldItem.getId() == newItem.getId()
-                    && Objects.equals(oldItem.getTitle(), newItem.getTitle())
+                    && Objects.equals(oldItem.getName(), newItem.getName())
                     && Objects.equals(oldItem.getAuthor(),newItem.getAuthor())
                     && oldItem.getRank() == newItem.getRank();
         }

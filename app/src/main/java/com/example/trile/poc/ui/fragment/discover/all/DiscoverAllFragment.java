@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,7 +150,38 @@ public class DiscoverAllFragment extends Fragment {
              * the oldList & newList in its super constructor.
              */
             mMangaItemAdapter.submitList(mangaItems);
+            mBinding.totalNumOfManga.setText(
+                    getString(R.string.discover_all_tab_total_num_of_manga,
+                            mangaItems.size())
+            );
             showMangaItemView();
+        });
+        mViewModel.getOrderBy().observe(this, orderBy -> {
+            mBinding.sortByButton.setText(
+                    getString(R.string.discover_all_tab_sort_by,
+                            orderBy)
+            );
+        });
+        mViewModel.setOrderBy(getString(R.string.discover_all_tab_sort_by_rank));
+
+        mBinding.sortByButton.setOnClickListener(v -> {
+            final CharSequence[] items = {
+                    getString(R.string.discover_all_tab_sort_by_name),
+                    getString(R.string.discover_all_tab_sort_by_rank)
+            };
+            new AlertDialog.Builder(new ContextThemeWrapper(getContext(), R.style.CustomAlertDialog))
+                    .setTitle(getString(R.string.discover_all_tab_sort_by_dialog_title))
+                    .setSingleChoiceItems(
+                            items,
+                            mViewModel.getOrderBy().getValue() ==
+                                    getString(R.string.discover_all_tab_sort_by_name)
+                                    ? 0 : 1,
+                            (dialog, which) -> {
+                                mViewModel.setOrderBy(items[which].toString());
+                                dialog.dismiss();
+                            }
+                    )
+                    .show();
         });
 
         return mBinding.getRoot();

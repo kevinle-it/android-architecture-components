@@ -12,6 +12,40 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/extreme_light_gray">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/info_and_sort_by_bar_padding">
+
+                    <TextView
+                        android:id="@+id/total_num_of_manga"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/info_and_sort_by_bar_text_size"
+                        android:textColor="@color/textColorPrimary"
+                        tools:text="17636 manga"/>
+
+                    <TextView
+                        android:id="@+id/sort_by_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/sort_by_button_padding"
+                        android:textSize="@dimen/info_and_sort_by_bar_text_size"
+                        android:textColor="@color/colorSecondary"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        tools:text="Sort by: Rank"/>
+
+                </LinearLayout>
+
+            </android.support.design.widget.AppBarLayout>
+
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/fragment_discover_all_swipe_refresh_container"
                 android:layout_width="match_parent"

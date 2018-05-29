@@ -51,7 +51,7 @@ public class DataGenerator {
         for (int i = 0; i < TITLE.length; i++) {
             for (int j = 0; j < AUTHOR.length; j++) {
                 MangaItemEntity mangaItem = new MangaItemEntity();
-                mangaItem.setTitle(TITLE[i]);
+                mangaItem.setName(TITLE[i]);
                 mangaItem.setAuthor(AUTHOR[j]);
                 mangaItems.add(mangaItem);
             }

@@ -9,6 +9,11 @@
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">10sp</dimen>
 
+    <!--Discover All Tab-->
+    <dimen name="info_and_sort_by_bar_padding">8dp</dimen>
+    <dimen name="info_and_sort_by_bar_text_size">15sp</dimen>
+    <dimen name="sort_by_button_padding">3dp</dimen>
+
     <!--Recycler Grid View-->
     <dimen name="recycler_grid_view_item_spacing">4dp</dimen>
     <dimen name="recycler_grid_view_padding">4dp</dimen>

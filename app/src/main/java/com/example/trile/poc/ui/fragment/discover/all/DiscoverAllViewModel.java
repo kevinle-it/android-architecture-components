@@ -1,6 +1,8 @@
 package com.example.trile.poc.ui.fragment.discover.all;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.paging.PagedList;
@@ -21,15 +23,25 @@ import java.util.List;
 public class DiscoverAllViewModel extends ViewModel {
 
     private final DataRepository mRepository;
+    private final MutableLiveData<String> mOrderBy;
     private final LiveData<PagedList<MangaItemEntity>> mMangaItems;
 
     public DiscoverAllViewModel(DataRepository repository) {
         mRepository = repository;
-        mMangaItems = mRepository.getAllMangaItems();
+        mOrderBy = new MutableLiveData<>();
+        mMangaItems = Transformations.switchMap(mOrderBy, mRepository::getAllMangaItems);
     }
 
     public LiveData<PagedList<MangaItemEntity>> getAllMangaItems() {
         return mMangaItems;
+    }
+
+    public LiveData<String> getOrderBy() {
+        return mOrderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        mOrderBy.postValue(orderBy);
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {

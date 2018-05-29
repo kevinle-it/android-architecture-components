@@ -19,7 +19,7 @@ public class MangaItemEntity implements MangaItem {
     private int Id;
 
     @SerializedName("name")
-    private String Title;
+    private String Name;
     @SerializedName("author")
     private String Author;
     @SerializedName("rank")
@@ -33,23 +33,23 @@ public class MangaItemEntity implements MangaItem {
     public MangaItemEntity() {
     }
 
-    public MangaItemEntity(int id, String title, String author, int rank) {
+    public MangaItemEntity(int id, String name, String author, int rank) {
         Id = id;
-        Title = title;
+        Name = name;
         Author = author;
         Rank = rank;
     }
 
     public MangaItemEntity(MangaItem mangaItem) {
         Id = mangaItem.getId();
-        Title = mangaItem.getTitle();
+        Name = mangaItem.getName();
         Author = mangaItem.getAuthor();
         Rank = mangaItem.getRank();
     }
 
-//    public MangaItemEntity(String title, String author, boolean favorited, String recentEpisode,
+//    public MangaItemEntity(String name, String author, boolean favorited, String recentEpisode,
 //                           Long readStartTime, Long readElapsedTime, int numChapterDownloaded) {
-//        this.Title = title;
+//        this.Name = name;
 //        this.Author = author;
 //        this.Favorited = favorited;
 //        this.RecentEpisode = recentEpisode;
@@ -60,7 +60,7 @@ public class MangaItemEntity implements MangaItem {
 //
 //    public MangaItemEntity(MangaItem mangaItem) {
 //        this.Id = mangaItem.getId();
-//        this.Title = mangaItem.getTitle();
+//        this.Name = mangaItem.getName();
 //        this.Author = mangaItem.getAuthor();
 //        this.Favorited = mangaItem.getFavorited();
 //        this.RecentEpisode = mangaItem.getRecentEpisode();
@@ -75,8 +75,8 @@ public class MangaItemEntity implements MangaItem {
     }
 
     @Override
-    public String getTitle() {
-        return Title;
+    public String getName() {
+        return Name;
     }
 
     @Override
@@ -118,8 +118,8 @@ public class MangaItemEntity implements MangaItem {
         this.Id = id;
     }
 
-    public void setTitle(String title) {
-        Title = title;
+    public void setName(String name) {
+        Name = name;
     }
 
     public void setAuthor(String author) {

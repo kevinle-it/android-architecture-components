@@ -63,7 +63,7 @@ public class DataRepository {
      * Expose this LiveData (list of all manga items from the database) for others
      * and get notified when the local data changes.
      */
-    public LiveData<PagedList<MangaItemEntity>> getAllMangaItems() {
+    public LiveData<PagedList<MangaItemEntity>> getAllMangaItems(String orderBy) {
         initializeData();
 
         PagedList.Config pagedListConfig = (new PagedList.Config.Builder())
@@ -78,7 +78,7 @@ public class DataRepository {
                 .build();
 
         return new LivePagedListBuilder(
-                mDatabase.mangaItemDAO().loadAllMangaItems(),
+                mDatabase.mangaItemDAO().loadAllMangaItems(orderBy),
                 pagedListConfig
         ).build();
     }

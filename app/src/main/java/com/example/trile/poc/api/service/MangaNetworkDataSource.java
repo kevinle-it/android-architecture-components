@@ -2,7 +2,9 @@ package com.example.trile.poc.api.service;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.paging.PagedList;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.example.trile.poc.api.service.manga.MangaClient;
 import com.example.trile.poc.database.entity.MangaItemEntity;
@@ -18,24 +20,22 @@ import java.util.List;
 public class MangaNetworkDataSource {
 
     private static MangaNetworkDataSource sInstance;
-    private final Context mContext;
 
     // LiveData storing the latest downloaded manga items
     private final MutableLiveData<List<MangaItemEntity>> mDownloadedMangaItems;
 
-    public MangaNetworkDataSource(final Context context) {
-        mContext = context;
+    public MangaNetworkDataSource() {
         mDownloadedMangaItems = new MutableLiveData<>();
     }
 
     /**
      * Get the singleton for this class
      */
-    public static MangaNetworkDataSource getInstance(final Context context) {
+    public static MangaNetworkDataSource getInstance() {
         if (sInstance == null) {
             synchronized (MangaNetworkDataSource.class) {
                 if (sInstance == null) {
-                    sInstance = new MangaNetworkDataSource(context.getApplicationContext());
+                    sInstance = new MangaNetworkDataSource();
                 }
             }
         }

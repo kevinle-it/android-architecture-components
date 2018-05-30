@@ -6,8 +6,10 @@ import android.arch.paging.PagedList;
 
 import com.example.trile.poc.AppExecutors;
 import com.example.trile.poc.api.service.MangaNetworkDataSource;
+import com.example.trile.poc.api.service.manga.DiscoverAllBoundaryCallback;
 import com.example.trile.poc.database.AppDatabase;
 import com.example.trile.poc.database.entity.MangaItemEntity;
+import com.example.trile.poc.ui.helper.InjectorUtils;
 
 import java.util.List;
 
@@ -64,7 +66,10 @@ public class DataRepository {
      * and get notified when the local data changes.
      */
     public LiveData<PagedList<MangaItemEntity>> getAllMangaItems(String orderBy) {
-        initializeData();
+//        initializeData();     // Don't need to initialize data anymore thanks to the handling of
+                                // Paging Library's BoundaryCallback fetching new Manga Items
+                                // automatically from Server on Zero Item/on Item at End of
+                                // RecyclerView loaded.
 
         PagedList.Config pagedListConfig = (new PagedList.Config.Builder())
                 .setEnablePlaceholders(true)    // PagedList will present null placeholders
@@ -80,6 +85,8 @@ public class DataRepository {
         return new LivePagedListBuilder(
                 mDatabase.mangaItemDAO().loadAllMangaItems(orderBy),
                 pagedListConfig
+        ).setBoundaryCallback(
+                new DiscoverAllBoundaryCallback(InjectorUtils.provideNetworkDataSource())
         ).build();
     }
 

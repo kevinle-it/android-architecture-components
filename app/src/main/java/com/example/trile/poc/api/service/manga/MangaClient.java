@@ -33,7 +33,8 @@ public class MangaClient {
         Callback<MangaResponse> callback = new Callback<MangaResponse>() {
             @Override
             public void onResponse(Call<MangaResponse> call, Response<MangaResponse> response) {
-                if (Objects.nonNull(response.body())
+                if (response.isSuccessful()
+                        && Objects.nonNull(response.body())
                         && Objects.nonNull(response.body().getData())) {
                     downloadedMangaItems.postValue(response.body().getData().getMangaItems());
                 } else {

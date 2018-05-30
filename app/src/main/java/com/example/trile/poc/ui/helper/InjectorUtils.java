@@ -17,17 +17,17 @@ import com.example.trile.poc.ui.fragment.discover.all.DiscoverAllViewModel;
 public class InjectorUtils {
     public static DataRepository provideRepository(Context context) {
         AppExecutors executors = AppExecutors.getInstance();
-        AppDatabase database = AppDatabase.getInstance(context, executors);
-        MangaNetworkDataSource networkDataSource = provideNetworkDataSource(context);
+        AppDatabase database = AppDatabase.getInstance(context.getApplicationContext(), executors);
+        MangaNetworkDataSource networkDataSource = provideNetworkDataSource();
         return DataRepository.getInstance(database, networkDataSource, executors);
     }
 
-    public static MangaNetworkDataSource provideNetworkDataSource(Context context) {
-        return MangaNetworkDataSource.getInstance(context.getApplicationContext());
+    public static MangaNetworkDataSource provideNetworkDataSource() {
+        return MangaNetworkDataSource.getInstance();
     }
 
     public static DiscoverAllViewModel.Factory provideDiscoverAllViewModelFactory(Context context) {
-        DataRepository repository = provideRepository(context);
+        DataRepository repository = provideRepository(context.getApplicationContext());
         return new DiscoverAllViewModel.Factory(repository);
     }
 }

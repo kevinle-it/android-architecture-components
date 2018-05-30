@@ -90,7 +90,7 @@ public class DataRepository {
         ).build();
     }
 
-    public LiveData<MangaItemEntity> loadMangaItemById(final int mangaItemId) {
+    public MangaItemEntity loadMangaItemById(final int mangaItemId) {
         initializeData();
         return mDatabase.mangaItemDAO().loadMangaItem(mangaItemId);
     }

@@ -27,8 +27,11 @@ public interface MangaItemDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<MangaItemEntity> mangaItems);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertManga(MangaItemEntity mangaItem);
+
     @Query("SELECT * FROM MangaItemEntity WHERE Id = :mangaItemId")
-    LiveData<MangaItemEntity> loadMangaItem(int mangaItemId);
+    MangaItemEntity loadMangaItem(int mangaItemId);
 
     @Query("SELECT EXISTS (SELECT Id FROM MangaItemEntity LIMIT 1)")
     boolean isExistAnyManga();

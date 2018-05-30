@@ -2,9 +2,11 @@ package com.example.trile.poc.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
 import android.support.annotation.VisibleForTesting;
 
@@ -56,7 +58,9 @@ public abstract class AppDatabase extends RoomDatabase {
                                     context.getApplicationContext(),
                                     AppDatabase.class,
                                     DATABASE_NAME
-                            ).build();
+                            )
+                            .addMigrations(MIGRATION_1_2)
+                            .build();
                     sInstance.setExecutors(executors);
                     sInstance.updateDatabaseCreated(context.getApplicationContext());
                 }
@@ -102,4 +106,26 @@ public abstract class AppDatabase extends RoomDatabase {
     public LiveData<Boolean> getDatabaseCreated() {
         return mIsDatabaseCreated;
     }
+
+    public static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.beginTransaction();
+            database.execSQL("ALTER TABLE MangaItemEntity RENAME TO MangaItemEntity_OLD");
+            database.execSQL("CREATE TABLE MangaItemEntity" +
+                    "(" +
+                        "Id INTEGER NOT NULL," +
+                        "Name TEXT," +
+                        "Author TEXT," +
+                        "Rank INTEGER NOT NULL DEFAULT 0," +
+                        "PRIMARY KEY(Id)" +
+                    ")"
+            );
+            database.execSQL("INSERT INTO MangaItemEntity(Id, Name, Author) " +
+                    "SELECT Id, Title, Author FROM MangaItemEntity_OLD");
+            database.execSQL("DROP TABLE MangaItemEntity_OLD");
+            database.setTransactionSuccessful();
+            database.endTransaction();
+        }
+    };
 }

@@ -1,5 +1,6 @@
-package com.example.trile.poc.ui.helper;
+package com.example.trile.poc.utils;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.example.trile.poc.AppExecutors;
@@ -15,6 +16,15 @@ import com.example.trile.poc.ui.fragment.discover.all.DiscoverAllViewModel;
  * @since 5/22/18 at 14:16
  */
 public class InjectorUtils {
+    public static MangaNetworkDataSource provideNetworkDataSource() {
+        return MangaNetworkDataSource.getInstance();
+    }
+
+    public static AppDatabase provideAppDatabase(Context context) {
+        AppExecutors executors = AppExecutors.getInstance();
+        return AppDatabase.getInstance(context.getApplicationContext(), executors);
+    }
+
     public static DataRepository provideRepository(Context context) {
         AppExecutors executors = AppExecutors.getInstance();
         AppDatabase database = AppDatabase.getInstance(context.getApplicationContext(), executors);
@@ -22,12 +32,8 @@ public class InjectorUtils {
         return DataRepository.getInstance(database, networkDataSource, executors);
     }
 
-    public static MangaNetworkDataSource provideNetworkDataSource() {
-        return MangaNetworkDataSource.getInstance();
-    }
-
-    public static DiscoverAllViewModel.Factory provideDiscoverAllViewModelFactory(Context context) {
-        DataRepository repository = provideRepository(context.getApplicationContext());
-        return new DiscoverAllViewModel.Factory(repository);
+    public static DiscoverAllViewModel.Factory provideDiscoverAllViewModelFactory(Application application) {
+        DataRepository repository = provideRepository(application.getApplicationContext());
+        return new DiscoverAllViewModel.Factory(application, repository);
     }
 }

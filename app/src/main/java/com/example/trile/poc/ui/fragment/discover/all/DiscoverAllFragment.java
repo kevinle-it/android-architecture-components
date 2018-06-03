@@ -24,10 +24,11 @@ import com.example.trile.poc.R;
 import com.example.trile.poc.databinding.FragmentDiscoverAllBinding;
 import com.example.trile.poc.ui.adapter.MangaItemAdapter;
 import com.example.trile.poc.ui.helper.CustomFastScroller;
-import com.example.trile.poc.ui.helper.InjectorUtils;
 import com.example.trile.poc.ui.helper.RecyclerViewSpacesItemDecoration;
 import com.example.trile.poc.ui.listener.EndlessRecyclerViewScrollListener;
 import com.example.trile.poc.ui.listener.OnMangaListInteractionListener;
+import com.example.trile.poc.utils.InjectorUtils;
+import com.example.trile.poc.utils.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -141,7 +142,7 @@ public class DiscoverAllFragment extends Fragment {
         showLoading();
 
         mViewModel = ViewModelProviders
-                .of(this, InjectorUtils.provideDiscoverAllViewModelFactory(getContext()))
+                .of(this, InjectorUtils.provideDiscoverAllViewModelFactory(getActivity().getApplication()))
                 .get(DiscoverAllViewModel.class);
         mViewModel.getAllMangaItems().observe(this, mangaItems -> {
             /**
@@ -154,7 +155,9 @@ public class DiscoverAllFragment extends Fragment {
                     getString(R.string.discover_all_tab_total_num_of_manga,
                             mangaItems.size())
             );
-            showMangaItemView();
+            if (Objects.nonNull(mangaItems) && mangaItems.size() > 0) {
+                showMangaItemView();
+            }
         });
         mViewModel.getOrderBy().observe(this, orderBy -> {
             mBinding.sortByButton.setText(

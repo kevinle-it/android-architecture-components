@@ -2,9 +2,6 @@ package com.example.trile.poc.api.service;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.paging.PagedList;
-import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.example.trile.poc.api.service.manga.MangaClient;
 import com.example.trile.poc.database.entity.MangaItemEntity;

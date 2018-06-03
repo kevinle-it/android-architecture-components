@@ -21,6 +21,7 @@ import com.example.trile.poc.database.entity.MangaItemEntity;
 import com.example.trile.poc.database.model.MangaItem;
 import com.example.trile.poc.databinding.MangaItemBinding;
 import com.example.trile.poc.repository.DataRepository;
+import com.example.trile.poc.repository.paging.MangaItemDataSource;
 import com.example.trile.poc.ui.listener.OnMangaListInteractionListener;
 
 import java.util.List;
@@ -94,6 +95,19 @@ public class MangaItemAdapter
          * {@link PagedList.Config} in the {@link DataRepository}.
          * This means {@link MangaItem} can be {@code null} for items outside the prefetching
          * distance defined in {@link PagedList.Config}.
+         *
+         * By default, the {@link PagedList} (with the {@link PagedList#size()} = total number of
+         * Manga Items we can load from the {@link AppDatabase} - here is 500) will be populated
+         * with a number of Manga Items from the {@link AppDatabase} equals to
+         * the {@link PagedList.Config.pageSize} and the trailer {@code NULL} items
+         * in {@link PagedList} after the {@link MangaItemDataSource#loadInitial()} is invoked.
+         *
+         * Afterwards, when we make a fast scroll to the end of the {@link PagedList}
+         * the middle off-screen items in the {@link PagedList} will be populated with
+         * dummy duplicated items.
+         * The {@link PagedList} only be populated with the new {@link MangaItem},
+         * loaded by {@link MangaItemDataSource#loadRange()} from the {@link AppDatabase},
+         * which currently visible on the screen.
          */
         Log.d(TAG, "onBindViewHolder: position = " + position);
         Log.d(TAG, "onBindViewHolder: mangaItem = " + mangaItem);

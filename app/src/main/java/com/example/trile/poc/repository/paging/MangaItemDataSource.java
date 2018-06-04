@@ -1,5 +1,6 @@
 package com.example.trile.poc.repository.paging;
 
+import android.arch.paging.DataSource;
 import android.arch.paging.PagedList;
 import android.arch.paging.PositionalDataSource;
 import android.arch.persistence.room.InvalidationTracker;
@@ -103,8 +104,25 @@ public class MangaItemDataSource extends PositionalDataSource<MangaItemEntity> {
     }
 
     private int countItems() {
-//        return mDatabase.mangaItemDAO().countAllMangaItems();
-        return 500; // Only get first 500 Manga Items for a smooth fast scrolling.
+        /**
+         * We should check whether the Database is Empty or Not before return the LIMIT constraint.
+         *
+         * Reason: always return 500 items even when the AppDatabase is Empty result in
+         * the invoking of {@link DataSource#invalidate()} method in
+         * {@link PositionalDataSource#loadInitial()} which leads to
+         * the MangaItemDataSource to be recreated and {@link PositionalDataSource#loadInitial()}
+         * is called again then {@link DataSource#invalidate()} is invoked and so on.
+         *
+         * This create an indeterminate loop that the MangaItemDataSource cannot ever pass the
+         * Empty Result List to
+         * {@link LoadInitialCallback#onResult(List Collections.emptyList, int 0, int 0)}
+         * -- which can invoke the BoundaryCallback running to fetch Manga Items from Server
+         * then insert them all into {@link AppDatabase}.
+         */
+        if (mDatabase.mangaItemDAO().countAllMangaItems() > 0) {// means we have thousands of items.
+            return 500; // Only get first 500 Manga Items for a smooth fast scrolling.
+        }
+        return 0;
     }
 
     /**

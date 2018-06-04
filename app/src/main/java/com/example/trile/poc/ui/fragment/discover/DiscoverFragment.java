@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.trile.poc.R;
 import com.example.trile.poc.databinding.FragmentDiscoverBinding;
@@ -20,6 +21,8 @@ import com.example.trile.poc.ui.customview.CustomViewPager;
 import com.example.trile.poc.ui.fragment.discover.all.DiscoverAllFragment;
 import com.example.trile.poc.ui.helper.RecyclerGridViewHelper;
 import com.example.trile.poc.ui.listener.OnMangaListInteractionListener;
+
+import androidx.navigation.Navigation;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +40,7 @@ public class DiscoverFragment extends Fragment {
 
     private Toolbar mToolbar;
     private View.OnClickListener mNavigationClickListener;
+    private ImageView mSearchButton;
     private TabLayout mTabLayout;
     private CustomViewPager mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
@@ -71,6 +75,11 @@ public class DiscoverFragment extends Fragment {
         mToolbar.setNavigationOnClickListener(mNavigationClickListener);
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        mSearchButton = mBinding.searchButton;
+        mSearchButton.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_main_fragment_to_search_fragment);
+        });
 
         mTabLayout = mBinding.fragmentDiscoverTabLayout;
         mTabLayout.addTab(mTabLayout.newTab().setText(R.string.discover_all));

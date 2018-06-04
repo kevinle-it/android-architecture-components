@@ -21,7 +21,9 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.trile.poc.R;
+import com.example.trile.poc.database.entity.MangaItemEntity;
 import com.example.trile.poc.databinding.FragmentDiscoverAllBinding;
+import com.example.trile.poc.ui.activity.MainActivity;
 import com.example.trile.poc.ui.adapter.MangaItemAdapter;
 import com.example.trile.poc.ui.helper.CustomFastScroller;
 import com.example.trile.poc.ui.helper.RecyclerViewSpacesItemDecoration;
@@ -29,6 +31,9 @@ import com.example.trile.poc.ui.listener.EndlessRecyclerViewScrollListener;
 import com.example.trile.poc.ui.listener.OnMangaListInteractionListener;
 import com.example.trile.poc.utils.InjectorUtils;
 import com.example.trile.poc.utils.Objects;
+
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -141,8 +146,17 @@ public class DiscoverAllFragment extends Fragment {
         mRecyclerView.setAdapter(mMangaItemAdapter);
         showLoading();
 
+        /**
+         * This {@link DiscoverAllFragment} won't retain when we {@link NavController#navigate(int)}
+         * between {@link NavDestination} in the app.
+         * Using {@link ViewModelProviders#of(getActivity)} to survive the
+         * {@link PagedList<MangaItemEntity> {@link DiscoverAllViewModel.mMangaItems}} until the
+         * {@link MainActivity} is {@link MainActivity#finish()} so it won't have to reload
+         * every time this {@link DiscoverAllFragment} is recreated.
+         */
         mViewModel = ViewModelProviders
-                .of(this, InjectorUtils.provideDiscoverAllViewModelFactory(getActivity().getApplication()))
+                .of(getActivity(), InjectorUtils.provideDiscoverAllViewModelFactory(getActivity()
+                        .getApplication()))
                 .get(DiscoverAllViewModel.class);
         mViewModel.getAllMangaItems().observe(this, mangaItems -> {
             /**

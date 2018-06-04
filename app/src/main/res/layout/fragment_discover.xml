@@ -44,11 +44,13 @@
                             style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
 
                         <ImageView
+                            android:id="@+id/search_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/search_button_right_margin"
+                            android:foreground="?android:attr/selectableItemBackground"
                             android:src="@drawable/ic_search_black_24dp"/>
 
                     </RelativeLayout>

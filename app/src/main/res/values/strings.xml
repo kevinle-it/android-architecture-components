@@ -21,6 +21,9 @@
     <string name="discover_all_tab_sort_by_name">Name</string>
     <string name="discover_all_tab_sort_by_rank">Rank</string>
 
+    <!--Search Fragment-->
+    <string name="search_fragment_search_field_hint">Search manga, authors</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

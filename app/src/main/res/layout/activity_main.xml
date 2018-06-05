@@ -16,4 +16,3 @@
         app:defaultNavHost="true"/> <!--This makes sure the NavHostFragment intercepts the system Back button-->
 
 </FrameLayout>
-

@@ -1,66 +1,93 @@
 package com.example.trile.poc.ui.fragment.search;
 
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.trile.poc.R;
+import com.example.trile.poc.database.AppDatabase;
+import com.example.trile.poc.database.model.MangaItem;
+import com.example.trile.poc.databinding.FragmentSearchBinding;
+import com.example.trile.poc.ui.customview.CustomEditText;
+import com.example.trile.poc.ui.helper.KeyboardHelper;
+
+import androidx.navigation.Navigation;
+
+import static com.example.trile.poc.ui.adapter.MangaItemAdapter.TAG;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * For Seaching {@link MangaItem} in {@link AppDatabase}.
+ * @author trile
+ * @since 6/5/18 at 13:14
  */
 public class SearchFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FragmentSearchBinding mBinding;
 
+    private Toolbar mToolbar;
+    private CustomEditText mSearchField;
+    private TextView mSetCustomFilterButton;
 
     public SearchFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        mBinding = DataBindingUtil
+                .inflate(inflater, R.layout.fragment_search, container, false);
+
+        mToolbar = mBinding.fragmentSearchToolbar;
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Setting this Navigation OnClickListener is Optional due to internal handling
+        // by setDisplayHomeAsUpEnabled(true) by default.
+        mToolbar.setNavigationOnClickListener(view -> {
+            // Must hide keyboard before navigateUp(), otherwise getActivity().getCurrentFocus()
+            // in hideSoftkeyBoard() will return NULL because this fragment is popped off the
+            // backstack, so no focused view exists.
+            KeyboardHelper.hideSoftKeyboard(getActivity(), true);
+            Navigation.findNavController(view).navigateUp();
+        });
+
+        mSearchField = mBinding.searchField;
+        KeyboardHelper.showSoftKeyboard(getActivity(), mSearchField);
+
+        mSearchField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO: 6/5/18 Implement showing matching manga items in Database on User typing.
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        mSetCustomFilterButton = mBinding.setCustomFilterButton;
+        mSetCustomFilterButton.setOnClickListener(v -> {
+            // TODO: 6/5/18 Show a dialog with ChipGroup of Chips to select Genres for Filtering.
+        });
+
+        return mBinding.getRoot();
     }
 
 }

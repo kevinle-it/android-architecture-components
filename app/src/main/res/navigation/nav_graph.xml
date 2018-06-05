@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@+id/main_fragment">
-    
+
     <fragment
         android:id="@+id/main_fragment"
         android:name="com.example.trile.poc.ui.fragment.MainFragment"
@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/search_fragment"
-        android:name="com.example.trile.poc.ui.fragment.SearchFragment"
+        android:name="com.example.trile.poc.ui.fragment.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
 </navigation>

@@ -10,7 +10,7 @@ import android.util.Log;
 
 import com.example.trile.poc.R;
 import com.example.trile.poc.ui.fragment.MainFragment;
-import com.example.trile.poc.ui.fragment.SearchFragment;
+import com.example.trile.poc.ui.fragment.search.SearchFragment;
 
 import androidx.navigation.NavController;
 import androidx.navigation.NavController.OnNavigatedListener;

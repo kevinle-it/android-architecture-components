@@ -1,4 +1,4 @@
-package com.example.trile.poc.ui.fragment;
+package com.example.trile.poc.ui.fragment.search;
 
 
 import android.os.Bundle;

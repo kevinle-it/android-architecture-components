@@ -143,6 +143,15 @@ public class DiscoverAllFragment extends Fragment {
         mMangaItemAdapter = new MangaItemAdapter(getContext(), mListener, mMangaItemImageHeight);
 
         mRecyclerView.addOnScrollListener(mRecyclerViewScrollListener);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                mViewModel.setRecyclerViewScrollOffset(
+                        dx,
+                        recyclerView.computeVerticalScrollOffset()
+                );
+            }
+        });
         mRecyclerView.setAdapter(mMangaItemAdapter);
         showLoading();
 
@@ -155,8 +164,11 @@ public class DiscoverAllFragment extends Fragment {
          * every time this {@link DiscoverAllFragment} is recreated.
          */
         mViewModel = ViewModelProviders
-                .of(getActivity(), InjectorUtils.provideDiscoverAllViewModelFactory(getActivity()
-                        .getApplication()))
+                .of(
+                        getActivity(),
+                        InjectorUtils
+                                .provideDiscoverAllViewModelFactory(getActivity().getApplication())
+                )
                 .get(DiscoverAllViewModel.class);
         mViewModel.getAllMangaItems().observe(this, mangaItems -> {
             /**
@@ -200,6 +212,11 @@ public class DiscoverAllFragment extends Fragment {
                     )
                     .show();
         });
+
+        mRecyclerView.smoothScrollBy(
+                mViewModel.getRecyclerViewScrollOffsetX(),
+                mViewModel.getRecyclerViewScrollOffsetY()
+        );
 
         return mBinding.getRoot();
     }

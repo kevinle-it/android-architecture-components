@@ -28,6 +28,8 @@ public class DiscoverAllViewModel extends AndroidViewModel {
     private final DataRepository mRepository;
     private final MutableLiveData<String> mOrderBy;
     private final MutableLiveData<PagedList<MangaItemEntity>> mMangaItems;
+    private int mRecyclerViewScrollOffsetX;
+    private int mRecyclerViewScrollOffsetY;
 
     public DiscoverAllViewModel(@NonNull Application application, DataRepository repository) {
         super(application);
@@ -35,6 +37,8 @@ public class DiscoverAllViewModel extends AndroidViewModel {
         mRepository = repository;
         mOrderBy = new MutableLiveData<>();
         mMangaItems = new MutableLiveData<>();
+        mRecyclerViewScrollOffsetX = 0;
+        mRecyclerViewScrollOffsetY = 0;
     }
 
     public LiveData<PagedList<MangaItemEntity>> getAllMangaItems() {
@@ -58,6 +62,20 @@ public class DiscoverAllViewModel extends AndroidViewModel {
                         .subscribeOn(Schedulers.io())
                         .subscribe(mMangaItems::postValue)
         );
+    }
+
+    public int getRecyclerViewScrollOffsetX() {
+        return mRecyclerViewScrollOffsetX;
+    }
+
+    public int getRecyclerViewScrollOffsetY() {
+        return mRecyclerViewScrollOffsetY;
+    }
+
+    public void setRecyclerViewScrollOffset(int recyclerViewScrollOffsetX,
+                                            int recyclerViewScrollOffsetY) {
+        mRecyclerViewScrollOffsetX = recyclerViewScrollOffsetX;
+        mRecyclerViewScrollOffsetY = recyclerViewScrollOffsetY;
     }
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {

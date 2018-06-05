@@ -3,10 +3,7 @@ package com.example.trile.poc.ui.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.example.trile.poc.R;
 import com.example.trile.poc.ui.fragment.MainFragment;

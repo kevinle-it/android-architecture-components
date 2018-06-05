@@ -12,4 +12,13 @@
         <item name="colorAccent">@color/colorSecondary</item>
     </style>
 
+    <style name="ThemeToolbar" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <!-- navigation icon color -->
+        <item name="colorControlNormal">@color/textColorPrimary</item>
+
+        <!-- color of the menu overflow icon -->
+        <!--<item name="android:textColorSecondary">@color/my_color</item>-->
+    </style>
+
 </resources>

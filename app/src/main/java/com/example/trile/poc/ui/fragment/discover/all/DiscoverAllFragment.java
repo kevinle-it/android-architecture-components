@@ -191,7 +191,13 @@ public class DiscoverAllFragment extends Fragment {
                             orderBy)
             );
         });
-        mViewModel.setOrderBy(getString(R.string.discover_all_tab_sort_by_rank));
+        if (mViewModel.getAllMangaItems().getValue() == null ||
+                mViewModel.getAllMangaItems().getValue().isEmpty()) {
+            mViewModel.setOrderBy(mViewModel.getOrderBy().getValue() == null
+                    ? getString(R.string.discover_all_tab_sort_by_rank)
+                    : mViewModel.getOrderBy().getValue()
+            );
+        }
 
         mBinding.sortByButton.setOnClickListener(v -> {
             final CharSequence[] items = {

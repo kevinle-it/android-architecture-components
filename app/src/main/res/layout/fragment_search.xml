@@ -58,6 +58,11 @@
             android:textColor="@color/colorSecondary"
             android:text="SET CUSTOM FILTER"/>
 
+        <com.example.trile.poc.ui.customview.chip.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/manga_rock"/>
+
     </LinearLayout>
 
 </layout>

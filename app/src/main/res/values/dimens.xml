@@ -5,6 +5,10 @@
     <!--Make space for the below Tab Layout (TabLayout default height is 48dp) -> Avoid overlap to each other issue when collapsing-->
     <dimen name="toolbar_bottom_margin">48dp</dimen>
 
+    <!--Custom Chip-->
+    <dimen name="chip_margin">4dp</dimen>
+    <dimen name="chip_padding">8dp</dimen>
+
     <!--Bottom Navigation View-->
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">10sp</dimen>

@@ -167,21 +167,19 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
             case STATE_IGNORE:
                 mState = State.STATE_INCLUDE;
                 setIncludeState();
-                dispatchStateChangedEvent();
                 break;
             case STATE_INCLUDE:
                 mState = State.STATE_EXCLUDE;
                 setExcludeState();
-                dispatchStateChangedEvent();
                 break;
             case STATE_EXCLUDE:
                 mState = State.STATE_IGNORE;
                 setIgnoreState();
-                dispatchStateChangedEvent();
                 break;
             default:
                 throw new AssertionError("Unknown State " + mState);
         }
+        dispatchStateChangedEvent();
     }
 
     private void dispatchStateChangedEvent() {

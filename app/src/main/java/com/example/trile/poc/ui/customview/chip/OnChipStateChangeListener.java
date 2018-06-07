@@ -1,7 +1,5 @@
 package com.example.trile.poc.ui.customview.chip;
 
-import android.widget.TextView;
-
 /**
  * @author trile
  * @since 6/6/18 at 15:25

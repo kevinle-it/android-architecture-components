@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +21,6 @@ import com.example.trile.poc.ui.customview.CustomEditText;
 import com.example.trile.poc.ui.helper.KeyboardHelper;
 
 import androidx.navigation.Navigation;
-
-import static com.example.trile.poc.ui.adapter.MangaItemAdapter.TAG;
 
 /**
  * For Seaching {@link MangaItem} in {@link AppDatabase}.

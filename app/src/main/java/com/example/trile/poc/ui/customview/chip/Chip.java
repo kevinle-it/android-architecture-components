@@ -52,26 +52,26 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
 
     public Chip(Context context) {
         super(context);
-        setupControl();
+        setUpControl();
     }
 
     public Chip(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setupControl();
+        setUpControl();
     }
 
     public Chip(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setupControl();
+        setUpControl();
     }
 
-    private void setupControl() {
-        setupView();
-        setupListener();
+    private void setUpControl() {
+        setUpView();
+        setUpListener();
         setupInitialState();
     }
 
-    private void setupView() {
+    private void setUpView() {
         // Setting margin as following is not working.
 //        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 //                LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -122,7 +122,7 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
         this.setBackground(mIgnoreStateBackground);
     }
 
-    private void setupListener() {
+    private void setUpListener() {
         mOnChipStateChangeListeners = new ArrayList<>();
 
         super.setOnTouchListener(this);

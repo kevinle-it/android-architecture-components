@@ -48,8 +48,6 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
 
     private List<OnChipStateChangeListener> mOnChipStateChangeListeners;
 
-    private boolean mIsMarginSet = false;
-
     public Chip(Context context) {
         super(context);
         setUpControl();
@@ -134,18 +132,8 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        // widthMeasureSpec & heightMeasureSpec are from Parent Layout.
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        if (!mIsMarginSet) {
-            if (getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) getLayoutParams();
-                int margin = getResources().getDimensionPixelSize(R.dimen.chip_margin);
-                layoutParams.setMargins(margin, margin, margin, margin);
-
-                requestLayout();
-                mIsMarginSet = true;
-            }
-        }
     }
 
     private void onTouchDown(MotionEvent motionEvent) {

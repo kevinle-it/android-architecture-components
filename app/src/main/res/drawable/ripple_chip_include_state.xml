@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
-        <bitmap android:src="@drawable/rounded_corners_chip"
+        <bitmap android:src="@drawable/rounded_corners_chip_ignore_state"
             android:tint="@color/colorSecondaryLight"/>
     </item>
     <item android:state_focused="true">
-        <bitmap android:src="@drawable/rounded_corners_chip"
+        <bitmap android:src="@drawable/rounded_corners_chip_ignore_state"
             android:tint="@color/colorSecondaryLight"/>
     </item>
-    <item>
-        <bitmap android:src="@drawable/rounded_corners_chip"
-            android:tint="@color/colorSecondary" />
-    </item>
+    <item android:drawable="@drawable/rounded_corners_chip_include_state"/>
 </selector>

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.example.trile.poc.R;
 import com.example.trile.poc.ui.helper.ViewUtils;
 import com.example.trile.poc.utils.Objects;
 
@@ -64,52 +65,202 @@ public class ChipGroup extends RelativeLayout {
     }
 
     @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        final int chipGroupWidth = getWidth();
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        int totalChipWidthOnCurrentLine = 0;
-        boolean mIsGoToNextRow = false;
-        int beginRowChipId = View.NO_ID;
-        for (int i = 0; i < mGenres.size(); ++i) {
-            if (mGenres.get(i).getVisibility() != GONE) {
-                totalChipWidthOnCurrentLine += mGenres.get(i).getWidth();
-                if (mIsGoToNextRow) {
-                    beginRowChipId = mGenres.get(i).getId();
+        final int childMargins = getResources().getDimensionPixelSize(R.dimen.chip_margin);
 
-                    RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-                            RelativeLayout.LayoutParams.WRAP_CONTENT,
-                            RelativeLayout.LayoutParams.WRAP_CONTENT
-                    );
-                    // TODO: 6/7/18 Fix the wrong rule (only the first child is positioned Start|Top
-                    // TODO: in parent).
-                    lp.addRule(RelativeLayout.ALIGN_PARENT_START);
-                    lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                    mGenres.get(i).setLayoutParams(lp);
+        final int containerLeftBoundForChildViews = this.getPaddingStart();
 
-                    mIsGoToNextRow = false;
+        // containerRightBoundForChildViews = containerWidth - paddingRight;
+        final int containerRightBoundForChildViews =
+                MeasureSpec.getSize(widthMeasureSpec) - this.getPaddingEnd();
 
-                    continue;
-                }
+        int maxChildHeightOnCurrentLine = 0;
 
-                if (chipGroupWidth - totalChipWidthOnCurrentLine > 0) {
-                    RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-                            RelativeLayout.LayoutParams.WRAP_CONTENT,
-                            RelativeLayout.LayoutParams.WRAP_CONTENT
-                    );
-                    // TODO: 6/7/18 Fix the wrong rule (only the first child is positioned Start|Top
-                    // TODO: in parent).
-                    lp.addRule(RelativeLayout.ALIGN_PARENT_START);
-                    lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-                    mGenres.get(i).setLayoutParams(lp);
-                } else {
-                    mIsGoToNextRow = true;
-                }
+        final int count = getChildCount();
+        // Measurement will ultimately be computing these values.
+        int maxHeight = 0;
+        int maxWidth = 0;
+        int childState = 0;
+        int mCurrentLeftPosition = containerLeftBoundForChildViews;
+        int rowCount = 0;
+
+        // Iterate through all children, measuring them and computing our dimensions
+        // from their size.
+        for (int i = 0; i < count; i++) {
+            final View child = getChildAt(i);
+
+            if (child.getVisibility() == GONE)
+                continue;
+
+            // Measure the child.
+            measureChild(child, widthMeasureSpec, heightMeasureSpec);
+            maxWidth += Math.max(
+                    maxWidth,
+                    childMargins + child.getMeasuredWidth() + childMargins
+            );
+
+            if (childMargins + mCurrentLeftPosition + child.getMeasuredWidth() + childMargins >
+                    containerRightBoundForChildViews - 200) {
+                mCurrentLeftPosition = containerLeftBoundForChildViews;
+                maxHeight += childMargins + maxChildHeightOnCurrentLine + childMargins;
+                // Reset maxChildHeight for next line.
+                maxChildHeightOnCurrentLine = 0;
+            } else {
+                maxHeight = Math.max(
+                        maxHeight,
+                        childMargins + child.getMeasuredHeight() + childMargins
+                );
             }
+            if (maxChildHeightOnCurrentLine < child.getMeasuredHeight()) {
+                maxChildHeightOnCurrentLine = child.getMeasuredHeight();
+            }
+            mCurrentLeftPosition += childMargins + child.getMeasuredWidth() + childMargins;
+
+            childState = combineMeasuredStates(childState, child.getMeasuredState());
         }
 
-        // Must call super.onLayout() because it will position the childs based on the above
-        // LayoutParams set to them.
-        super.onLayout(changed, l, t, r, b);
+        // Check against our minimum height and width
+        maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight());
+        maxWidth = Math.max(maxWidth, getSuggestedMinimumWidth());
+
+        // Report our final dimensions.
+        setMeasuredDimension(resolveSizeAndState(maxWidth, widthMeasureSpec, childState),
+                resolveSizeAndState(maxHeight, heightMeasureSpec, childState << MEASURED_HEIGHT_STATE_SHIFT));
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+
+        final int childMargins = getResources().getDimensionPixelSize(R.dimen.chip_margin);
+
+        final int containerLeftBoundForChildViews = this.getPaddingStart();
+        final int containerTopBoundForChildViews = this.getPaddingTop();
+
+        // containerRightBoundForChildViews = containerWidth - paddingRight;
+        final int containerRightBoundForChildViews =
+                this.getMeasuredWidth() - this.getPaddingEnd();
+
+        // containerBottomBoundForChildViews = containerHeight - paddingBottom;
+        final int containerBottomBoundForChildViews =
+                this.getMeasuredHeight() - this.getPaddingBottom();
+
+        final int maxChildWidthInContainer =
+                containerRightBoundForChildViews - containerLeftBoundForChildViews;
+        final int maxChildHeightInContainer =
+                containerBottomBoundForChildViews - containerTopBoundForChildViews;
+
+        int currentLeftPosition = containerLeftBoundForChildViews;
+        int currentTopPosition = containerTopBoundForChildViews;
+        int maxChildHeightOnCurrentLine = 0;
+
+        int currentChildWidth;
+        int currentChildHeight;
+
+        final int count = getChildCount();
+        for (int i = 0; i < count; i++) {
+            View child = getChildAt(i);
+            if (child.getVisibility() == GONE) {
+                return;
+            }
+            // Let the child to measure itself.
+            //
+            // MeasureSpec.makeMeasureSpec(maxChildWidthInContainer, MeasureSpec.AT_MOST) just
+            // means combining the maxChildWidthInContainer & MeasureSpec.AT_MOST into an integer.
+            //
+            // The widthMeasureSpec & heightMeasureSpec created by below
+            // MeasureSpec.makeMeasureSpec() will be pass to onMeasure() method in the Chip
+            // Custom View after we call child.measure().
+            //
+            // The 2 measureSpecs will then be used by the child in its onMeasure() to set the
+            // actual
+            // width and height for itself through setMeasuredDimension().
+            //
+            // For example, the following code will be run in onMeasure() of the child after we
+            // call child.measure():
+            //
+            // int desiredWidth = 100;  // Our actual desiredWidth.
+            // int desiredHeight = 100; // Our actual desiredHeight.
+            //
+            // // Get the mode we created along with the size by above MeasureSpec.makeMeasureSpec()
+            // int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+            // int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+            // int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+            // int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+            //
+            // int width;
+            // int height;
+            //
+            // // Measure Width
+            // if (widthMode == MeasureSpec.EXACTLY) {
+            //     // Must be this size
+            //     width = widthSize;
+            // } else if (widthMode == MeasureSpec.AT_MOST) {
+            //     // Can't be bigger than...
+            //     width = Math.min(desiredWidth, widthSize);   // if the widthSize (passed from
+            //                                                  // parent) smaller than our desired
+            //                                                  // width, then the child width must
+            //                                                  // be widthSize at most.
+            // } else { // MeasureSpec.UNSPECIFIED
+            //     // Be whatever you want
+            //     width = desiredWidth;
+            // }
+            //
+            // // Measure Height
+            // if (heightMode == MeasureSpec.EXACTLY) {
+            //     // Must be this size
+            //     height = heightSize;
+            // } else if (heightMode == MeasureSpec.AT_MOST) {
+            //     // Can't be bigger than...
+            //     height = Math.min(desiredHeight, heightSize);    // if the heightSize (passed
+            //                                                      // from parent) smaller than
+            //                                                      // our desired width, then
+            //                                                      // the child height must be
+            //                                                      // heightSize at most.
+            // } else { // MeasureSpec.UNSPECIFIED
+            //     // Be whatever you want
+            //     height = desiredHeight;
+            // }
+            //
+            // // MUST CALL THIS
+            // setMeasuredDimension(width, height);
+            child.measure(
+                    MeasureSpec.makeMeasureSpec(
+                            maxChildWidthInContainer, MeasureSpec.AT_MOST
+                    ),
+                    MeasureSpec.makeMeasureSpec(
+                            maxChildHeightInContainer, MeasureSpec.AT_MOST
+                    )
+            );
+            currentChildWidth = child.getMeasuredWidth();
+            currentChildHeight = child.getMeasuredHeight();
+
+            // Exceeding Right Bound of Container (including leftChildMargin & rightChildMargin)
+            // => Go to next line.
+            if (childMargins + currentLeftPosition + currentChildWidth + childMargins >
+                    containerRightBoundForChildViews - 200) {
+                currentLeftPosition = containerLeftBoundForChildViews;
+                currentTopPosition += childMargins + maxChildHeightOnCurrentLine + childMargins;
+                // Reset maxChildHeight for next line.
+                maxChildHeightOnCurrentLine = 0;
+            }
+
+            child.layout(
+                    childMargins + currentLeftPosition, // include leftMargin.
+                    childMargins + currentTopPosition,  // include topMargin.
+
+                    // include leftMargin & rightMargin.
+                    childMargins + currentLeftPosition + currentChildWidth + childMargins,
+
+                    // include topMargin & bottomMargin.
+                    childMargins + currentTopPosition + currentChildHeight + childMargins
+            );
+
+            if (maxChildHeightOnCurrentLine < currentChildHeight) {
+                maxChildHeightOnCurrentLine = currentChildHeight;
+            }
+            currentLeftPosition += childMargins + currentChildWidth + childMargins;
+        }
     }
 
     @Override

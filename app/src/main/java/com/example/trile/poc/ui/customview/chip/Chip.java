@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -78,6 +79,9 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
 //        int margin = getResources().getDimensionPixelSize(R.dimen.chip_margin);
 //        params.setMargins(margin, margin, margin, margin);
 //        this.setLayoutParams(params);
+
+        this.setMaxLines(1);
+        this.setEllipsize(TextUtils.TruncateAt.END);
 
         this.setTextAppearance(getContext(), android.R.style.TextAppearance_Small);
 

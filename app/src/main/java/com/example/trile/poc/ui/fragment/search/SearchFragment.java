@@ -18,6 +18,8 @@ import com.example.trile.poc.database.AppDatabase;
 import com.example.trile.poc.database.model.MangaItem;
 import com.example.trile.poc.databinding.FragmentSearchBinding;
 import com.example.trile.poc.ui.customview.CustomEditText;
+import com.example.trile.poc.ui.customview.chip.Chip;
+import com.example.trile.poc.ui.customview.chip.ChipGroup;
 import com.example.trile.poc.ui.helper.KeyboardHelper;
 
 import androidx.navigation.Navigation;
@@ -83,6 +85,13 @@ public class SearchFragment extends Fragment {
         mSetCustomFilterButton.setOnClickListener(v -> {
             // TODO: 6/5/18 Show a dialog with ChipGroup of Chips to select Genres for Filtering.
         });
+
+        ChipGroup chipGroup = mBinding.chipGroup;
+        for (int i = 0; i < 50; ++i) {
+            Chip chip = new Chip(getContext());
+            chip.setText(String.valueOf(i*10000));
+            chipGroup.addView(chip);
+        }
 
         return mBinding.getRoot();
     }

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -105,10 +104,10 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
         mExcludeStateBackground = ContextCompat.getDrawable(getContext(), R.drawable
                 .ripple_chip_exclude_state);
 
-        DrawableCompat.setTint(mIncludeStateBackground, ContextCompat.getColor(getContext(), R
-                .color.colorSecondary));
-        DrawableCompat.setTint(mExcludeStateBackground, ContextCompat.getColor(getContext(), R
-                .color.colorAccent));
+//        DrawableCompat.setTint(mIncludeStateBackground, ContextCompat.getColor(getContext(), R
+//                .color.colorSecondary));
+//        DrawableCompat.setTint(mExcludeStateBackground, ContextCompat.getColor(getContext(), R
+//                .color.colorAccent));
 
         // TODO: 6/6/18 Create Ripple Effect for 3 States.
         // Using <bitmap> android:tint result in Drawable Not Found Exception when getting Drawable.

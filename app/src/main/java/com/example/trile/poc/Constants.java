@@ -15,6 +15,8 @@ public class Constants {
             "http://apidev.mangarockhd.com/query/debug400/";
     public static final int GET_ALL_MANGAS_MSID_CODE = 71;
     public static final String GET_ALL_MANGAS_COUNTRY_CODE = "Vietnam";
+    public static final String MANGA_ROCK_THUMBNAIL_BASE_URL =
+            "https://mrthumb.nabstudio.com/t/%1$d/%2$d.jpg";
 
     /**
      * Constants related to {@link ViewPager} and {@link BottomNavigationView}.

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
@@ -14,7 +15,9 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.trile.poc.Constants;
 import com.example.trile.poc.R;
 import com.example.trile.poc.database.AppDatabase;
 import com.example.trile.poc.database.entity.MangaItemEntity;
@@ -40,17 +43,22 @@ public class MangaItemAdapter
     private final Context mContext;
     List<? extends MangaItem> mMangaList;
     private final int mMangaItemImageHeight;
+    private CircularProgressDrawable mCircularProgressDrawable;
 
     @Nullable
     private final OnMangaListInteractionListener mListener;
 
-    public MangaItemAdapter(final Context context,
+    public MangaItemAdapter(@NonNull final Context context,
                             @Nullable OnMangaListInteractionListener listener,
                             final int mangaItemImageHeight) {
         super(DIFF_CALLBACK);
         mContext = context;
         mListener = listener;
         mMangaItemImageHeight = mangaItemImageHeight;
+
+        mCircularProgressDrawable = new CircularProgressDrawable(context);
+        mCircularProgressDrawable.setStrokeWidth(5f);
+        mCircularProgressDrawable.setCenterRadius(30f);
     }
 
     @NonNull
@@ -66,10 +74,21 @@ public class MangaItemAdapter
     public void onBindViewHolder(@NonNull MangaItemViewHolder holder, int position) {
         MangaItem mangaItem = getItem(position);
         if (mangaItem != null) {
+            mCircularProgressDrawable.start();
             Glide.with(mContext)
-                    .load(R.drawable.dragonball_poster)
-                    .apply(new RequestOptions().fitCenter())
+                    .load(
+                            String.format(
+                                    Constants.MANGA_ROCK_THUMBNAIL_BASE_URL,
+                                    Constants.GET_ALL_MANGAS_MSID_CODE,
+                                    mangaItem.getId()
+                            )
+                    )
+                    .apply(new RequestOptions().fitCenter()
+                            .placeholder(mCircularProgressDrawable)
+                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    )
                     .into(holder.mBinding.mangaImage);
+
             holder.mBinding.setManga(mangaItem);
             holder.mBinding.getRoot().setOnClickListener(v -> {
                 if (mListener != null) {

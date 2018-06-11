@@ -12,7 +12,7 @@ import android.support.v4.view.ViewPager;
 public class Constants {
     // Manga Rock Server's Base URL.
     public static final String MANGA_ROCK_SERVER_BASE_URL =
-            "http://mrapi.vn.nabstudio.com/query/web400/";
+            "http://apidev.mangarockhd.com/query/debug400/";
     public static final int GET_ALL_MANGAS_MSID_CODE = 71;
     public static final String GET_ALL_MANGAS_COUNTRY_CODE = "Vietnam";
 

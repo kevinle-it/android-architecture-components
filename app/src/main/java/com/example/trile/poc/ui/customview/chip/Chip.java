@@ -4,16 +4,13 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.example.trile.poc.R;
 import com.example.trile.poc.utils.Objects;
@@ -50,30 +47,28 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
 
     private List<OnChipStateChangeListener> mOnChipStateChangeListeners;
 
-    private boolean mIsMarginSet = false;
-
     public Chip(Context context) {
         super(context);
-        setupControl();
+        setUpControl();
     }
 
     public Chip(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setupControl();
+        setUpControl();
     }
 
     public Chip(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setupControl();
+        setUpControl();
     }
 
-    private void setupControl() {
-        setupView();
-        setupListener();
+    private void setUpControl() {
+        setUpView();
+        setUpListener();
         setupInitialState();
     }
 
-    private void setupView() {
+    private void setUpView() {
         // Setting margin as following is not working.
 //        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 //                LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -82,6 +77,9 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
 //        int margin = getResources().getDimensionPixelSize(R.dimen.chip_margin);
 //        params.setMargins(margin, margin, margin, margin);
 //        this.setLayoutParams(params);
+
+        this.setMaxLines(1);
+        this.setEllipsize(TextUtils.TruncateAt.END);
 
         this.setTextAppearance(getContext(), android.R.style.TextAppearance_Small);
 
@@ -105,10 +103,10 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
         mExcludeStateBackground = ContextCompat.getDrawable(getContext(), R.drawable
                 .ripple_chip_exclude_state);
 
-        DrawableCompat.setTint(mIncludeStateBackground, ContextCompat.getColor(getContext(), R
-                .color.colorSecondary));
-        DrawableCompat.setTint(mExcludeStateBackground, ContextCompat.getColor(getContext(), R
-                .color.colorAccent));
+//        DrawableCompat.setTint(mIncludeStateBackground, ContextCompat.getColor(getContext(), R
+//                .color.colorSecondary));
+//        DrawableCompat.setTint(mExcludeStateBackground, ContextCompat.getColor(getContext(), R
+//                .color.colorAccent));
 
         // TODO: 6/6/18 Create Ripple Effect for 3 States.
         // Using <bitmap> android:tint result in Drawable Not Found Exception when getting Drawable.
@@ -124,7 +122,7 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
         this.setBackground(mIgnoreStateBackground);
     }
 
-    private void setupListener() {
+    private void setUpListener() {
         mOnChipStateChangeListeners = new ArrayList<>();
 
         super.setOnTouchListener(this);
@@ -136,18 +134,8 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        // widthMeasureSpec & heightMeasureSpec are from Parent Layout.
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        if (!mIsMarginSet) {
-            if (getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) getLayoutParams();
-                int margin = getResources().getDimensionPixelSize(R.dimen.chip_margin);
-                layoutParams.setMargins(margin, margin, margin, margin);
-
-                requestLayout();
-                mIsMarginSet = true;
-            }
-        }
     }
 
     private void onTouchDown(MotionEvent motionEvent) {
@@ -167,21 +155,19 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
             case STATE_IGNORE:
                 mState = State.STATE_INCLUDE;
                 setIncludeState();
-                dispatchStateChangedEvent();
                 break;
             case STATE_INCLUDE:
                 mState = State.STATE_EXCLUDE;
                 setExcludeState();
-                dispatchStateChangedEvent();
                 break;
             case STATE_EXCLUDE:
                 mState = State.STATE_IGNORE;
                 setIgnoreState();
-                dispatchStateChangedEvent();
                 break;
             default:
                 throw new AssertionError("Unknown State " + mState);
         }
+        dispatchStateChangedEvent();
     }
 
     private void dispatchStateChangedEvent() {

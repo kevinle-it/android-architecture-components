@@ -3,6 +3,6 @@
     android:color="@color/colorAccentLight">    <!-- ripple color -->
 
     <!-- for Button -->
-    <item android:drawable="@drawable/rounded_corners_chip"/>
+    <item android:drawable="@drawable/rounded_corners_chip_exclude_state"/>
 
 </ripple>

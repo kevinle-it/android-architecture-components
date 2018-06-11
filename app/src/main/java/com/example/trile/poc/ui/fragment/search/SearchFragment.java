@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +18,11 @@ import com.example.trile.poc.database.AppDatabase;
 import com.example.trile.poc.database.model.MangaItem;
 import com.example.trile.poc.databinding.FragmentSearchBinding;
 import com.example.trile.poc.ui.customview.CustomEditText;
+import com.example.trile.poc.ui.customview.chip.Chip;
+import com.example.trile.poc.ui.customview.chip.ChipGroup;
 import com.example.trile.poc.ui.helper.KeyboardHelper;
 
 import androidx.navigation.Navigation;
-
-import static com.example.trile.poc.ui.adapter.MangaItemAdapter.TAG;
 
 /**
  * For Seaching {@link MangaItem} in {@link AppDatabase}.
@@ -86,6 +85,13 @@ public class SearchFragment extends Fragment {
         mSetCustomFilterButton.setOnClickListener(v -> {
             // TODO: 6/5/18 Show a dialog with ChipGroup of Chips to select Genres for Filtering.
         });
+
+        ChipGroup chipGroup = mBinding.chipGroup;
+        for (int i = 0; i < 50; ++i) {
+            Chip chip = new Chip(getContext());
+            chip.setText(String.valueOf(i*10000));
+            chipGroup.addView(chip);
+        }
 
         return mBinding.getRoot();
     }

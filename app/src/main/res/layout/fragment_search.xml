@@ -29,7 +29,10 @@
                 android:layout_height="match_parent"
                 android:padding="5dp"
                 android:background="@android:color/transparent"
-                android:hint="@string/search_fragment_search_field_hint"/>
+                android:hint="@string/search_fragment_search_field_hint"
+                android:maxLines="1"
+                android:lines="1"
+                android:singleLine="true"/>
 
         </android.support.v7.widget.Toolbar>
 
@@ -62,6 +65,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/manga_rock"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.example.trile.poc.ui.customview.chip.ChipGroup
+                android:id="@+id/chip_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </ScrollView>
 
     </LinearLayout>
 

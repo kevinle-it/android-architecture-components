@@ -67,7 +67,7 @@ public class MangaItemDataSource extends PositionalDataSource<MangaItemEntity> {
         final int firstLoadPosition = computeInitialLoadPosition(params, totalCount);
         final int firstLoadSize = computeInitialLoadSize(params, firstLoadPosition, totalCount);
 
-        List<MangaItemEntity> list = loadRange(firstLoadPosition, firstLoadSize, mOrderResultListBy);
+        List<MangaItemEntity> list = loadRange(firstLoadPosition, firstLoadSize);
         if (list != null && list.size() == firstLoadSize) {
             callback.onResult(list, firstLoadPosition, totalCount);
         } else {
@@ -90,7 +90,7 @@ public class MangaItemDataSource extends PositionalDataSource<MangaItemEntity> {
      */
     @Override
     public void loadRange(@NonNull LoadRangeParams params, @NonNull LoadRangeCallback<MangaItemEntity> callback) {
-        List<MangaItemEntity> list = loadRange(params.startPosition, params.loadSize, mOrderResultListBy);
+        List<MangaItemEntity> list = loadRange(params.startPosition, params.loadSize);
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -129,9 +129,10 @@ public class MangaItemDataSource extends PositionalDataSource<MangaItemEntity> {
      * Return the rows from startPos to startPos + loadCount.
      */
     @Nullable
-    public List<MangaItemEntity> loadRange(int startPosition, int loadCount, String orderBy) {
+    public List<MangaItemEntity> loadRange(int startPosition, int loadCount) {
         if (startPosition + loadCount <= 500) { // Only get first 500 Manga Items for a smooth fast scrolling.
-            return mDatabase.mangaItemDAO().loadMangaItemsRange(startPosition, loadCount, orderBy);
+            return mDatabase.mangaItemDAO()
+                    .loadMangaItemsRange(startPosition, loadCount, mOrderResultListBy);
         }
         return null;
     }

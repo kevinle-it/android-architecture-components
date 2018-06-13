@@ -14,11 +14,12 @@ public class MangaItemDataSourceFactory extends DataSource.Factory<Integer, Mang
 
     private String mOrderResultListBy;
 
-    private MutableLiveData<MangaItemDataSource> mMangaItemDataSource = new MutableLiveData<>();
+    private MutableLiveData<MangaItemDataSource> mMangaItemDataSource;
 
-    public MangaItemDataSourceFactory(Context mContext, String mOrderResultListBy) {
-        this.mContext = mContext;
-        this.mOrderResultListBy = mOrderResultListBy;
+    public MangaItemDataSourceFactory(Context context, String orderResultListBy) {
+        mContext = context;
+        mOrderResultListBy = orderResultListBy;
+        mMangaItemDataSource = new MutableLiveData<>();
     }
 
     /**

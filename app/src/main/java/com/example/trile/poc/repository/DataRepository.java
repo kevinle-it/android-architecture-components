@@ -7,11 +7,11 @@ import android.content.Context;
 
 import com.example.trile.poc.AppExecutors;
 import com.example.trile.poc.api.service.MangaNetworkDataSource;
-import com.example.trile.poc.api.service.manga.DiscoverAllBoundaryCallback;
 import com.example.trile.poc.database.AppDatabase;
 import com.example.trile.poc.database.entity.MangaItemEntity;
-import com.example.trile.poc.repository.paging.MangaItemDataSource;
-import com.example.trile.poc.repository.paging.MangaItemDataSourceFactory;
+import com.example.trile.poc.repository.paging.discover.all.DiscoverAllBoundaryCallback;
+import com.example.trile.poc.repository.paging.discover.all.MangaItemDataSource;
+import com.example.trile.poc.repository.paging.discover.all.MangaItemDataSourceFactory;
 import com.example.trile.poc.utils.InjectorUtils;
 
 import java.util.List;

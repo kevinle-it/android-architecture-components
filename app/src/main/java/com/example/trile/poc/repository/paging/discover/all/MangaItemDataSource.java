@@ -1,4 +1,4 @@
-package com.example.trile.poc.repository.paging;
+package com.example.trile.poc.repository.paging.discover.all;
 
 import android.arch.paging.DataSource;
 import android.arch.paging.PagedList;

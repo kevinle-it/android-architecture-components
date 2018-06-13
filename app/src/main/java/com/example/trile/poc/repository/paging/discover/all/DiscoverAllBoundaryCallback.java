@@ -1,4 +1,4 @@
-package com.example.trile.poc.api.service.manga;
+package com.example.trile.poc.repository.paging.discover.all;
 
 import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;

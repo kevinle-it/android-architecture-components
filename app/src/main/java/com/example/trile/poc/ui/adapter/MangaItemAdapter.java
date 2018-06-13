@@ -24,7 +24,7 @@ import com.example.trile.poc.database.entity.MangaItemEntity;
 import com.example.trile.poc.database.model.MangaItem;
 import com.example.trile.poc.databinding.MangaItemBinding;
 import com.example.trile.poc.repository.DataRepository;
-import com.example.trile.poc.repository.paging.MangaItemDataSource;
+import com.example.trile.poc.repository.paging.discover.all.MangaItemDataSource;
 import com.example.trile.poc.ui.listener.OnMangaListInteractionListener;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.trile.poc.repository.paging;
+package com.example.trile.poc.repository.paging.discover.all;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;

@@ -35,8 +35,8 @@ public interface MangaGenreDAO {
             "END ASC " +
             "LIMIT :loadCount OFFSET :startPosition"
     )
-    List<MangaItemEntity> filterManga(List<Integer> includeGenres, List<Integer> excludeGenres,
-                                      int startPosition, int loadCount, String orderBy);
+    List<MangaItemEntity> filterMangaByGenre(List<Integer> includeGenres, List<Integer> excludeGenres,
+                                             int startPosition, int loadCount, String orderBy);
 
     @Query(
             "SELECT COUNT(*) " +
@@ -48,5 +48,5 @@ public interface MangaGenreDAO {
                                                                   "WHERE GenreId IN (:excludeGenres)" +
                         ")"
     )
-    int countFilteredManga(List<Integer> includeGenres, List<Integer> excludeGenres);
+    int countFilteredMangaByGenre(List<Integer> includeGenres, List<Integer> excludeGenres);
 }

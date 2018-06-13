@@ -209,10 +209,10 @@ public class DataRepository {
         );
     }
 
-    public Observable<PagedList<MangaItemEntity>> filterManga(Context context,
-                                                              List<Integer> includeGenres,
-                                                              List<Integer> excludeGenres,
-                                                              String orderBy) {
+    public Observable<PagedList<MangaItemEntity>> filterMangaByGenre(Context context,
+                                                                     List<Integer> includeGenres,
+                                                                     List<Integer> excludeGenres,
+                                                                     String orderBy) {
         PagedList.Config pagedListConfig = (new PagedList.Config.Builder())
                 .setEnablePlaceholders(true)
                 .setPrefetchDistance(60)

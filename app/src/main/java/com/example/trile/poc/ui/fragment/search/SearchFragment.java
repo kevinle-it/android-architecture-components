@@ -202,7 +202,7 @@ public class SearchFragment extends Fragment {
                                             excludeGenres.add(chip.getId());
                                         }
                                     }
-                                    mViewModel.filterManga(
+                                    mViewModel.filterMangaByGenre(
                                             includeGenres,
                                             excludeGenres,
                                             getString(R.string.discover_all_tab_sort_by_rank)

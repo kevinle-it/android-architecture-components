@@ -86,7 +86,7 @@ public class MangaResultDataSource extends PositionalDataSource<MangaItemEntity>
 
     private int countItems() {
         return mDatabase.mangaGenreDAO()
-                .countFilteredManga(mIncludeGenres, mExcludeGenres);
+                .countFilteredMangaByGenre(mIncludeGenres, mExcludeGenres);
     }
 
     /**
@@ -96,7 +96,7 @@ public class MangaResultDataSource extends PositionalDataSource<MangaItemEntity>
     public List<MangaItemEntity> loadRange(int startPosition, int loadCount) {
         if (startPosition + loadCount <= 500) { // Only get first 500 Manga Items for a smooth fast scrolling.
             return mDatabase.mangaGenreDAO()
-                    .filterManga(
+                    .filterMangaByGenre(
                             mIncludeGenres,
                             mExcludeGenres,
                             startPosition,

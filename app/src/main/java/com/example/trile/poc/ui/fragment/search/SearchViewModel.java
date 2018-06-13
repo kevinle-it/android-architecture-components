@@ -55,11 +55,11 @@ public class SearchViewModel extends AndroidViewModel {
         return mMangaResults;
     }
 
-    public void filterManga(List<Integer> includeGenres,
-                            List<Integer> excludeGenres,
-                            String orderBy) {
+    public void filterMangaByGenre(List<Integer> includeGenres,
+                                   List<Integer> excludeGenres,
+                                   String orderBy) {
         mCompositeDisposable.add(
-                mRepository.filterManga
+                mRepository.filterMangaByGenre
                         (
                                 getApplication().getApplicationContext(),
                                 includeGenres,

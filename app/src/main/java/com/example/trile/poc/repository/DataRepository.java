@@ -15,7 +15,7 @@ import com.example.trile.poc.database.model.MangaItemsAndGenres;
 import com.example.trile.poc.repository.paging.discover.all.DiscoverAllBoundaryCallback;
 import com.example.trile.poc.repository.paging.discover.all.MangaItemDataSource;
 import com.example.trile.poc.repository.paging.discover.all.MangaItemDataSourceFactory;
-import com.example.trile.poc.repository.paging.search.MangaResultDataSourceFactory;
+import com.example.trile.poc.repository.paging.search.genre.FilterByGenreResultDataSourceFactory;
 import com.example.trile.poc.utils.InjectorUtils;
 import com.example.trile.poc.utils.Objects;
 
@@ -219,8 +219,8 @@ public class DataRepository {
                 .setPageSize(20)
                 .build();
 
-        MangaResultDataSourceFactory mangaResultDataSourceFactory =
-                new MangaResultDataSourceFactory(
+        FilterByGenreResultDataSourceFactory filterByGenreResultDataSourceFactory =
+                new FilterByGenreResultDataSourceFactory(
                         context.getApplicationContext(),
                         includeGenres,
                         excludeGenres,
@@ -229,7 +229,7 @@ public class DataRepository {
 
         //noinspection unchecked
         return new RxPagedListBuilder(
-                mangaResultDataSourceFactory,
+                filterByGenreResultDataSourceFactory,
                 pagedListConfig
         ).buildObservable();
     }

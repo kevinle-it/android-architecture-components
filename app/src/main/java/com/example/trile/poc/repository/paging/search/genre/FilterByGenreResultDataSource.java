@@ -1,4 +1,4 @@
-package com.example.trile.poc.repository.paging.search;
+package com.example.trile.poc.repository.paging.search.genre;
 
 import android.arch.paging.PositionalDataSource;
 import android.arch.persistence.room.InvalidationTracker;
@@ -18,7 +18,7 @@ import java.util.Set;
  * @author trile
  * @since 6/12/18 at 15:49
  */
-public class MangaResultDataSource extends PositionalDataSource<MangaItemEntity> {
+public class FilterByGenreResultDataSource extends PositionalDataSource<MangaItemEntity> {
 
     private AppDatabase mDatabase;
 
@@ -30,10 +30,10 @@ public class MangaResultDataSource extends PositionalDataSource<MangaItemEntity>
     @SuppressWarnings("FieldCanBeLocal")
     private final InvalidationTracker.Observer mObserver;
 
-    public MangaResultDataSource(Context context,
-                                 List<Integer> includeGenres,
-                                 List<Integer> excludeGenres,
-                                 String orderResultListBy) {
+    public FilterByGenreResultDataSource(Context context,
+                                         List<Integer> includeGenres,
+                                         List<Integer> excludeGenres,
+                                         String orderResultListBy) {
         mDatabase = InjectorUtils.provideAppDatabase(context.getApplicationContext());
         mIncludeGenres = includeGenres;
         mExcludeGenres = excludeGenres;

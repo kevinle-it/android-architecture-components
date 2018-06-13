@@ -1,10 +1,18 @@
 package com.example.trile.poc.ui.fragment.search;
 
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,12 +23,24 @@ import android.widget.TextView;
 
 import com.example.trile.poc.R;
 import com.example.trile.poc.database.AppDatabase;
+import com.example.trile.poc.database.model.Genre;
 import com.example.trile.poc.database.model.MangaItem;
 import com.example.trile.poc.databinding.FragmentSearchBinding;
+import com.example.trile.poc.ui.adapter.MangaItemAdapter;
 import com.example.trile.poc.ui.customview.CustomEditText;
 import com.example.trile.poc.ui.customview.chip.Chip;
 import com.example.trile.poc.ui.customview.chip.ChipGroup;
+import com.example.trile.poc.ui.helper.CustomFastScroller;
 import com.example.trile.poc.ui.helper.KeyboardHelper;
+import com.example.trile.poc.ui.helper.RecyclerGridViewHelper;
+import com.example.trile.poc.ui.helper.RecyclerViewSpacesItemDecoration;
+import com.example.trile.poc.ui.listener.EndlessRecyclerViewScrollListener;
+import com.example.trile.poc.ui.listener.OnMangaListInteractionListener;
+import com.example.trile.poc.utils.InjectorUtils;
+import com.example.trile.poc.utils.Objects;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import androidx.navigation.Navigation;
 
@@ -36,6 +56,16 @@ public class SearchFragment extends Fragment {
     private Toolbar mToolbar;
     private CustomEditText mSearchField;
     private TextView mSetCustomFilterButton;
+
+    private MangaItemAdapter mMangaItemAdapter;
+    private RecyclerView mRecyclerView;
+    private EndlessRecyclerViewScrollListener mRecyclerViewScrollListener;
+    private OnMangaListInteractionListener mListener;
+
+    private View mFilterDialogLayout;
+    private List<? extends Genre> mMangaGenres;
+
+    private SearchViewModel mViewModel;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -81,17 +111,106 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        mRecyclerView = mBinding.searchResult;
+
+        Pair<Integer, Integer> pair = RecyclerGridViewHelper.calculateFitScreenSpanCount(getContext());
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), pair.first);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
+
+        mRecyclerView.addItemDecoration(new RecyclerViewSpacesItemDecoration(getResources()
+                .getDimensionPixelSize(R.dimen.recycler_grid_view_item_spacing)));
+
+        mRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+//                loadMoreOlderHousingsFromApi(page);
+            }
+        };
+        StateListDrawable verticalThumbDrawable = (StateListDrawable) ContextCompat.getDrawable
+                (getContext(), R.drawable.thumb_drawable);
+        Drawable verticalTrackDrawable = ContextCompat.getDrawable(getContext(), R.drawable
+                .line_drawable);
+        StateListDrawable horizontalThumbDrawable = (StateListDrawable) ContextCompat.getDrawable
+                (getContext(), R.drawable.thumb_drawable);
+        Drawable horizontalTrackDrawable = ContextCompat.getDrawable(getContext(), R.drawable
+                .line_drawable);
+        int defaultWidth = getResources().getDimensionPixelSize(android.support.v7.recyclerview.R.dimen
+                .fastscroll_default_thickness);
+        int scrollbarMinimumRange = getResources().getDimensionPixelSize(android.support.v7.recyclerview.R.dimen
+                .fastscroll_minimum_range);
+        int margin = getResources().getDimensionPixelOffset(android.support.v7.recyclerview.R.dimen
+                .fastscroll_margin);
+        new CustomFastScroller(getContext(), mRecyclerView, verticalThumbDrawable,
+                verticalTrackDrawable, horizontalThumbDrawable, horizontalTrackDrawable,
+                defaultWidth, scrollbarMinimumRange, margin);
+
+        mMangaItemAdapter = new MangaItemAdapter(getContext(), mListener, pair.second);
+
+        mRecyclerView.addOnScrollListener(mRecyclerViewScrollListener);
+        mRecyclerView.setAdapter(mMangaItemAdapter);
+
+        mViewModel = ViewModelProviders
+                .of(
+                        getActivity(),
+                        InjectorUtils.provideSearchViewModelFactory(getActivity().getApplication())
+                )
+                .get(SearchViewModel.class);
+        mViewModel.getMangaGenres().observe(
+                this,
+                mangaGenres -> mMangaGenres = mangaGenres
+        );
+        mViewModel.getMangaResults().observe(
+                this,
+                mangaItems -> {
+                    mMangaItemAdapter.submitList(mangaItems);
+                }
+        );
+
         mSetCustomFilterButton = mBinding.setCustomFilterButton;
         mSetCustomFilterButton.setOnClickListener(v -> {
-            // TODO: 6/5/18 Show a dialog with ChipGroup of Chips to select Genres for Filtering.
-        });
 
-        ChipGroup chipGroup = mBinding.chipGroup;
-        for (int i = 0; i < 50; ++i) {
-            Chip chip = new Chip(getContext());
-            chip.setText(String.valueOf(i*10000));
-            chipGroup.addView(chip);
-        }
+            mFilterDialogLayout = LayoutInflater
+                    .from(getContext())
+                    .inflate(R.layout.filter_dialog, null);
+
+            ChipGroup chipGroup = mFilterDialogLayout.findViewById(R.id.chip_group);
+            if (Objects.nonNull(chipGroup) && Objects.nonNull(mMangaGenres)) {
+                for (Genre genre : mMangaGenres) {
+                    Chip chip = new Chip(getContext());
+                    chip.setId(genre.getId());
+                    chip.setText(genre.getGenre());
+                    chipGroup.addView(chip);
+                }
+
+                new AlertDialog.Builder(getContext())
+                        .setTitle(R.string.search_fragment_filter_dialog_title)
+                        .setView(mFilterDialogLayout)
+                        .setNegativeButton(R.string.search_fragment_filter_dialog_negative,
+                                (dialog, which) -> dialog.dismiss()
+                        )
+                        .setPositiveButton(R.string.search_fragment_filter_dialog_positive,
+                                (dialog, which) -> {
+                                    List<Integer> includeGenres = new ArrayList<>();
+                                    List<Integer> excludeGenres = new ArrayList<>();
+                                    for (Chip chip : chipGroup.getGenres()) {
+                                        if (chip.getState() == Chip.State.STATE_INCLUDE) {
+                                            includeGenres.add(chip.getId());
+                                        } else if (chip.getState() == Chip.State.STATE_EXCLUDE) {
+                                            excludeGenres.add(chip.getId());
+                                        }
+                                    }
+                                    mViewModel.filterManga(
+                                            includeGenres,
+                                            excludeGenres,
+                                            getString(R.string.discover_all_tab_sort_by_rank)
+                                    );
+                                })
+                        .show();
+            }
+        });
 
         return mBinding.getRoot();
     }

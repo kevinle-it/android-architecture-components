@@ -1,11 +1,11 @@
 package com.example.trile.poc.api.service;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-
+import com.example.trile.poc.api.service.genre.GenreClient;
 import com.example.trile.poc.api.service.manga.MangaClient;
 import com.example.trile.poc.database.entity.MangaItemEntity;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,11 +18,7 @@ public class MangaNetworkDataSource {
 
     private static MangaNetworkDataSource sInstance;
 
-    // LiveData storing the latest downloaded manga items
-    private final MutableLiveData<List<MangaItemEntity>> mDownloadedMangaItems;
-
     public MangaNetworkDataSource() {
-        mDownloadedMangaItems = new MutableLiveData<>();
     }
 
     /**
@@ -39,21 +35,11 @@ public class MangaNetworkDataSource {
         return sInstance;
     }
 
-    /**
-     * Expose this LiveData (list of downloaded manga items) for others to observe the changes
-     * on fetching manga items progress.
-     *
-     * @return Live Data for others to observe the changes.
-     */
-    public LiveData<List<MangaItemEntity>> getDownloadedMangaItems() {
-        return mDownloadedMangaItems;
+    public List<MangaItemEntity> startFetchAllMangaItems() throws IOException {
+        return MangaClient.getAllMangaItems();
     }
 
-    /**
-     * Start to Fetch all manga items from Manga Rock server using Retrofit
-     * and post the downloaded manga items to all observers.
-     */
-    public void startFetchAllMangaItems() {
-        MangaClient.getAllMangaItems(mDownloadedMangaItems);
+    public HashMap<Integer, String> startFetchAllGenres() throws IOException {
+        return GenreClient.getAllGenres();
     }
 }

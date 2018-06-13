@@ -8,12 +8,17 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
 import com.example.trile.poc.AppExecutors;
+import com.example.trile.poc.database.dao.GenreDAO;
 import com.example.trile.poc.database.dao.MangaDetailDAO;
+import com.example.trile.poc.database.dao.MangaGenreDAO;
 import com.example.trile.poc.database.dao.MangaItemDAO;
+import com.example.trile.poc.database.entity.GenreEntity;
 import com.example.trile.poc.database.entity.MangaDetailEntity;
+import com.example.trile.poc.database.entity.MangaGenreEntity;
 import com.example.trile.poc.database.entity.MangaItemEntity;
 
 import java.util.List;
@@ -24,7 +29,15 @@ import java.util.List;
  * @author trile
  * @since 5/22/18 at 11:47
  */
-@Database(entities = {MangaItemEntity.class, MangaDetailEntity.class}, version = 2)
+@Database(
+        entities = {
+                MangaItemEntity.class,
+                MangaDetailEntity.class,
+                GenreEntity.class,
+                MangaGenreEntity.class
+        },
+        version = 3
+)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase sInstance;
@@ -35,6 +48,10 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract MangaItemDAO mangaItemDAO();
 
     public abstract MangaDetailDAO mangaDetailDAO();
+
+    public abstract GenreDAO genreDAO();
+
+    public abstract MangaGenreDAO mangaGenreDAO();
 
     private AppExecutors mExecutors;
 
@@ -59,7 +76,7 @@ public abstract class AppDatabase extends RoomDatabase {
                                     AppDatabase.class,
                                     DATABASE_NAME
                             )
-                            .addMigrations(MIGRATION_1_2)
+                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                             .build();
                     sInstance.setExecutors(executors);
                     sInstance.updateDatabaseCreated(context.getApplicationContext());
@@ -126,6 +143,34 @@ public abstract class AppDatabase extends RoomDatabase {
             database.execSQL("DROP TABLE MangaItemEntity_OLD");
             database.setTransactionSuccessful();
             database.endTransaction();
+        }
+    };
+
+    public static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS GenreEntity" +
+                    "(" +
+                        "Id INTEGER NOT NULL," +
+                        "Genre TEXT," +
+                        "PRIMARY KEY(Id)" +
+                    ")"
+            );
+            database.execSQL("CREATE TABLE IF NOT EXISTS MangaGenreEntity" +
+                    "(" +
+                        "MangaId INTEGER NOT NULL," +
+                        "GenreId INTEGER NOT NULL," +
+                        "PRIMARY KEY(MangaId, GenreId), " +
+                        "FOREIGN KEY(`MangaId`) REFERENCES `MangaItemEntity`(`Id`) " +
+                                               "ON UPDATE NO ACTION ON DELETE CASCADE, " +
+                        "FOREIGN KEY(`GenreId`) REFERENCES `GenreEntity`(`Id`) " +
+                                               "ON UPDATE NO ACTION ON DELETE CASCADE" +
+                    ")"
+            );
+            database.execSQL(
+                    "CREATE INDEX index_MangaGenreEntity_GenreId " +
+                    "ON MangaGenreEntity(GenreId)"
+            );
         }
     };
 }

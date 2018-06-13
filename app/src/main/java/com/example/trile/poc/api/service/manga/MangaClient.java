@@ -1,6 +1,6 @@
 package com.example.trile.poc.api.service.manga;
 
-import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.Nullable;
 
 import com.example.trile.poc.Constants;
 import com.example.trile.poc.api.model.MangaResponse;
@@ -8,10 +8,10 @@ import com.example.trile.poc.api.service.RetrofitClient;
 import com.example.trile.poc.database.entity.MangaItemEntity;
 import com.example.trile.poc.utils.Objects;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
@@ -25,28 +25,20 @@ public class MangaClient {
     private static IMangaClient mIMangaClient =
             RetrofitClient.getClient().create(IMangaClient.class);
 
-    public static void getAllMangaItems(final MutableLiveData<List<MangaItemEntity>> downloadedMangaItems) {
+    @Nullable
+    public static List<MangaItemEntity> getAllMangaItems() throws IOException {
         Call<MangaResponse> call =
                 mIMangaClient.getAllMangaItems(
                         Constants.GET_ALL_MANGAS_MSID_CODE, Constants.GET_ALL_MANGAS_COUNTRY_CODE
                 );
-        Callback<MangaResponse> callback = new Callback<MangaResponse>() {
-            @Override
-            public void onResponse(Call<MangaResponse> call, Response<MangaResponse> response) {
-                if (response.isSuccessful()
-                        && Objects.nonNull(response.body())
-                        && Objects.nonNull(response.body().getData())) {
-                    downloadedMangaItems.postValue(response.body().getData().getMangaItems());
-                } else {
-                    downloadedMangaItems.postValue(null);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<MangaResponse> call, Throwable t) {
+        Response<MangaResponse> response = call.execute();
 
-            }
-        };
-        call.enqueue(callback);
+        if (response.isSuccessful()
+                && Objects.nonNull(response.body())
+                && Objects.nonNull(response.body().getData())) {
+            return response.body().getData().getMangaItems();
+        }
+        return null;
     }
 }

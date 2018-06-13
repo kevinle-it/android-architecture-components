@@ -1,10 +1,13 @@
 package com.example.trile.poc.database.entity;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import com.example.trile.poc.database.model.MangaItem;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 /**
  * @author trile
@@ -23,6 +26,12 @@ public class MangaItemEntity implements MangaItem {
     private String Author;
     @SerializedName("rank")
     private int Rank;
+
+    @Ignore
+    @SerializedName("categories")
+    private ArrayList<Integer> Genres;  // Only use for object mapping on API Request, then store
+                                        // this in MangaGenreEntity to manage Genres of each Manga,
+                                        // so we @Ignore this when storing data into Room Database.
 //    private boolean Favorited = false;
 //    private String RecentEpisode = "";
 //    private Long ReadStartTime = -1L;
@@ -86,6 +95,11 @@ public class MangaItemEntity implements MangaItem {
     @Override
     public int getRank() {
         return Rank;
+    }
+
+    @Override
+    public ArrayList<Integer> getGenres() {
+        return Genres;
     }
 
     //    @Override

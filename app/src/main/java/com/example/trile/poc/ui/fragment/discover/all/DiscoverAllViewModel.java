@@ -59,7 +59,8 @@ public class DiscoverAllViewModel extends AndroidViewModel {
                 mRepository.getAllMangaItems
                         (
                                 getApplication().getApplicationContext(),
-                                orderBy
+                                orderBy,
+                                mCompositeDisposable
                         )
                         .observeOn(Schedulers.io())
                         .subscribeOn(Schedulers.io())

@@ -1,5 +1,7 @@
 package com.example.trile.poc.api.service;
 
+import android.support.annotation.Nullable;
+
 import com.example.trile.poc.api.service.genre.GenreClient;
 import com.example.trile.poc.api.service.manga.MangaClient;
 import com.example.trile.poc.database.entity.MangaItemEntity;
@@ -35,10 +37,12 @@ public class MangaNetworkDataSource {
         return sInstance;
     }
 
+    @Nullable
     public List<MangaItemEntity> startFetchAllMangaItems() throws IOException {
         return MangaClient.getAllMangaItems();
     }
 
+    @Nullable
     public HashMap<Integer, String> startFetchAllGenres() throws IOException {
         return GenreClient.getAllGenres();
     }

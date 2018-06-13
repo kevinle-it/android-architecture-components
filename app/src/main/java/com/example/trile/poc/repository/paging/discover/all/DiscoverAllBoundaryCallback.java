@@ -10,8 +10,12 @@ import com.example.trile.poc.database.entity.MangaItemEntity;
 import com.example.trile.poc.database.model.MangaItemsAndGenres;
 import com.example.trile.poc.repository.DataRepository;
 import com.example.trile.poc.utils.InjectorUtils;
+import com.example.trile.poc.utils.Objects;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
@@ -50,12 +54,16 @@ public class DiscoverAllBoundaryCallback extends PagedList.BoundaryCallback<Mang
                                         .map(isFetchNeeded -> {
                                             if (isFetchNeeded) {
                                                 try {
-                                                    return mMangaNetworkDataSource.startFetchAllMangaItems();
+                                                    List<MangaItemEntity> newMangaItemsFromNetwork =
+                                                            mMangaNetworkDataSource.startFetchAllMangaItems();
+                                                    if (Objects.nonNull(newMangaItemsFromNetwork)) {
+                                                        return newMangaItemsFromNetwork;
+                                                    }
                                                 } catch (IOException e) {
                                                     e.printStackTrace();
                                                 }
                                             }
-                                            return null;
+                                            return new ArrayList<MangaItemEntity>();
                                         })
                         ),
                         Single.defer(() ->
@@ -63,12 +71,16 @@ public class DiscoverAllBoundaryCallback extends PagedList.BoundaryCallback<Mang
                                         .map(isFetchNeeded -> {
                                             if (isFetchNeeded) {
                                                 try {
-                                                    return mMangaNetworkDataSource.startFetchAllGenres();
+                                                    HashMap<Integer, String> newGenresFromNetwork =
+                                                            mMangaNetworkDataSource.startFetchAllGenres();
+                                                    if (Objects.nonNull(newGenresFromNetwork)) {
+                                                        return newGenresFromNetwork;
+                                                    }
                                                 } catch (IOException e) {
                                                     e.printStackTrace();
                                                 }
                                             }
-                                            return null;
+                                            return new HashMap<Integer, String>();
                                         })
                         ),
                         (mangaItems, genres) -> new MangaItemsAndGenres(mangaItems, genres)

@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
@@ -16,9 +17,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.example.trile.poc.R;
@@ -57,6 +60,9 @@ public class SearchFragment extends Fragment {
     private CustomEditText mSearchField;
     private TextView mSetCustomFilterButton;
 
+    private Handler mHandler;
+    private Runnable mSearchByNameQueryRunnable;
+
     private MangaItemAdapter mMangaItemAdapter;
     private RecyclerView mRecyclerView;
     private EndlessRecyclerViewScrollListener mRecyclerViewScrollListener;
@@ -94,6 +100,7 @@ public class SearchFragment extends Fragment {
         mSearchField = mBinding.searchField;
         KeyboardHelper.showSoftKeyboard(getActivity(), mSearchField);
 
+        mHandler = new Handler();
         mSearchField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -102,13 +109,27 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // TODO: 6/5/18 Implement showing matching manga items in Database on User typing.
+                if (Objects.nonNull(mSearchByNameQueryRunnable)) {
+                    mHandler.removeCallbacks(mSearchByNameQueryRunnable);
+                }
+                mSearchByNameQueryRunnable = () -> mViewModel.filterMangaByName(
+                        s.toString(),
+                        getString(R.string.discover_all_tab_sort_by_rank)
+                );
+                mHandler.postDelayed(mSearchByNameQueryRunnable, 1000);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
 
             }
+        });
+        mSearchField.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                KeyboardHelper.hideSoftKeyboard(getActivity(), true);
+                return true;
+            }
+            return false;
         });
 
         mRecyclerView = mBinding.searchResult;

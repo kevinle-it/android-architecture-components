@@ -16,6 +16,7 @@ import com.example.trile.poc.repository.paging.discover.all.DiscoverAllBoundaryC
 import com.example.trile.poc.repository.paging.discover.all.MangaItemDataSource;
 import com.example.trile.poc.repository.paging.discover.all.MangaItemDataSourceFactory;
 import com.example.trile.poc.repository.paging.search.genre.FilterByGenreResultDataSourceFactory;
+import com.example.trile.poc.repository.paging.search.name.FilterByNameResultDataSourceFactory;
 import com.example.trile.poc.utils.InjectorUtils;
 import com.example.trile.poc.utils.Objects;
 
@@ -230,6 +231,29 @@ public class DataRepository {
         //noinspection unchecked
         return new RxPagedListBuilder(
                 filterByGenreResultDataSourceFactory,
+                pagedListConfig
+        ).buildObservable();
+    }
+
+    public Observable<PagedList<MangaItemEntity>> filterMangaByName(Context context,
+                                                                    String mangaName,
+                                                                    String orderBy) {
+        PagedList.Config pagedListConfig = (new PagedList.Config.Builder())
+                .setEnablePlaceholders(true)
+                .setPrefetchDistance(60)
+                .setPageSize(20)
+                .build();
+
+        FilterByNameResultDataSourceFactory filterByNameResultDataSourceFactory =
+                new FilterByNameResultDataSourceFactory(
+                        context.getApplicationContext(),
+                        mangaName,
+                        orderBy
+                );
+
+        //noinspection unchecked
+        return new RxPagedListBuilder(
+                filterByNameResultDataSourceFactory,
                 pagedListConfig
         ).buildObservable();
     }

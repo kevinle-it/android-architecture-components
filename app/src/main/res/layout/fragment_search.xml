@@ -32,7 +32,8 @@
                 android:hint="@string/search_fragment_search_field_hint"
                 android:maxLines="1"
                 android:lines="1"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                android:imeOptions="actionSearch"/>
 
         </android.support.v7.widget.Toolbar>
 

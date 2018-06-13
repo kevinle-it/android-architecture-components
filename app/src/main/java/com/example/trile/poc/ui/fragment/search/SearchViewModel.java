@@ -71,6 +71,19 @@ public class SearchViewModel extends AndroidViewModel {
         );
     }
 
+    public void filterMangaByName(String mangaName, String orderBy) {
+        mCompositeDisposable.add(
+                mRepository.filterMangaByName
+                        (
+                                getApplication().getApplicationContext(),
+                                mangaName,
+                                orderBy
+                        )
+                        .observeOn(Schedulers.io())
+                        .subscribe(mMangaResults::postValue)
+        );
+    }
+
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
 
         @NonNull

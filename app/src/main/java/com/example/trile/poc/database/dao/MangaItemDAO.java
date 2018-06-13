@@ -38,6 +38,21 @@ public interface MangaItemDAO {
     @Query("SELECT EXISTS (SELECT Id FROM MangaItemEntity LIMIT 1)")
     boolean isExistAnyManga();
 
+    @Query("SELECT * FROM MangaItemEntity " +
+            "WHERE Name LIKE '%' || :mangaName || '%' " +
+            "ORDER BY " +
+            "CASE :orderBy " +
+            "WHEN 'Name' THEN Name " +
+            "WHEN 'Rank' THEN Rank " +
+            "END ASC " +
+            "LIMIT :loadCount OFFSET :startPosition")
+    List<MangaItemEntity> filterMangaByName(int startPosition, int loadCount,
+                                            String mangaName, String orderBy);
+
+    @Query("SELECT COUNT(*) FROM MangaItemEntity " +
+            "WHERE Name LIKE '%' || :mangaName || '%'")
+    int countFilteredMangaByName(String mangaName);
+
 //    @Query("SELECT * FROM MangaItemEntity WHERE Favorited = 1")
 //    LiveData<List<MangaItemEntity>> loadFavoriteMangas();
 //

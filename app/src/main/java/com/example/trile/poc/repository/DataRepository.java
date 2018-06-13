@@ -101,33 +101,6 @@ public class DataRepository {
         ).buildObservable();
     }
 
-    public MangaItemEntity loadMangaItemById(final int mangaItemId) {
-        initializeData();
-        return mDatabase.mangaItemDAO().loadMangaItem(mangaItemId);
-    }
-
-    /**
-     * Creates periodic sync tasks and checks to see if an immediate sync is required. If an
-     * immediate sync is required, this method will take care of making sure that sync occurs.
-     */
-    private synchronized void initializeData() {
-
-        // Only perform initialization once per app lifetime. If initialization has already been
-        // performed, we have nothing to do in this method.
-        if (mInitialized) return;
-        mInitialized = true;
-
-        // This method call triggers Manga Rock to create its task to synchronize manga item data
-        // periodically.
-//        RetrofitClient.scheduleRecurringFetchMangaSync();
-
-        mExecutors.diskIO().execute(() -> {
-            if (isFetchNeeded()) {
-                startFetchAllMangaItems();
-            }
-        });
-    }
-
     /**
      * Checks if there is any manga for the app to display all the needed data.
      *

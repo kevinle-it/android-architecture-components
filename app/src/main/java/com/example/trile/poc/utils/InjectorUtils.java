@@ -33,7 +33,6 @@ public class InjectorUtils {
     }
 
     public static DiscoverAllViewModel.Factory provideDiscoverAllViewModelFactory(Application application) {
-        DataRepository repository = provideRepository(application.getApplicationContext());
-        return new DiscoverAllViewModel.Factory(application, repository);
+        return new DiscoverAllViewModel.Factory(application);
     }
 }

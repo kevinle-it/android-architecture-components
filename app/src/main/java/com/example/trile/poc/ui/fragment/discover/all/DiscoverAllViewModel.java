@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 
 import com.example.trile.poc.database.entity.MangaItemEntity;
 import com.example.trile.poc.repository.DataRepository;
+import com.example.trile.poc.utils.InjectorUtils;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -31,10 +32,12 @@ public class DiscoverAllViewModel extends AndroidViewModel {
     private int mRecyclerViewScrollOffsetX;
     private int mRecyclerViewScrollOffsetY;
 
-    public DiscoverAllViewModel(@NonNull Application application, DataRepository repository) {
+    public DiscoverAllViewModel(@NonNull Application application) {
         super(application);
         mCompositeDisposable = new CompositeDisposable();
-        mRepository = repository;
+
+        mRepository = InjectorUtils.provideRepository(application.getApplicationContext());
+
         mOrderBy = new MutableLiveData<>();
         mMangaItems = new MutableLiveData<>();
         mRecyclerViewScrollOffsetX = 0;
@@ -83,18 +86,15 @@ public class DiscoverAllViewModel extends AndroidViewModel {
         @NonNull
         private final Application mApplication;
 
-        private final DataRepository mRepository;
-
-        public Factory(@NonNull Application application, DataRepository repository) {
+        public Factory(@NonNull Application application) {
             mApplication = application;
-            mRepository = repository;
         }
 
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
             //noinspection unchecked
-            return (T) new DiscoverAllViewModel(mApplication, mRepository);
+            return (T) new DiscoverAllViewModel(mApplication);
         }
     }
 

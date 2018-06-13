@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.example.trile.poc.R;
-import com.example.trile.poc.ui.helper.ViewUtils;
 import com.example.trile.poc.utils.Objects;
 
 import java.util.ArrayList;
@@ -53,12 +52,13 @@ public class ChipGroup extends RelativeLayout {
         mGenres = new ArrayList<>();
     }
 
+    public List<Chip> getGenres() {
+        return mGenres;
+    }
+
     @Override
     public void addView(View child) {
         if (Objects.nonNull(child) && child instanceof Chip) {
-            if (child.getId() == View.NO_ID) {
-                child.setId(ViewUtils.generateViewId());
-            }
             mGenres.add((Chip) child);
         }
         super.addView(child);

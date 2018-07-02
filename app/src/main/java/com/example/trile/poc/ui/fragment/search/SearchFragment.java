@@ -175,7 +175,7 @@ public class SearchFragment extends Fragment {
 
         mViewModel = ViewModelProviders
                 .of(
-                        getActivity(),
+                        this,
                         InjectorUtils.provideSearchViewModelFactory(getActivity().getApplication())
                 )
                 .get(SearchViewModel.class);

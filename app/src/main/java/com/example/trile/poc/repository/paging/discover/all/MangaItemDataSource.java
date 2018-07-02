@@ -91,6 +91,11 @@ public class MangaItemDataSource extends PositionalDataSource<MangaItemEntity> {
     @Override
     public void loadRange(@NonNull LoadRangeParams params, @NonNull LoadRangeCallback<MangaItemEntity> callback) {
         List<MangaItemEntity> list = loadRange(params.startPosition, params.loadSize);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (list != null) {
             callback.onResult(list);
         } else {

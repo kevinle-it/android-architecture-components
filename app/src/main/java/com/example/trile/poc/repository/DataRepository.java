@@ -86,14 +86,15 @@ public class DataRepository {
                                 // RecyclerView loaded.
 
         PagedList.Config pagedListConfig = (new PagedList.Config.Builder())
-                .setEnablePlaceholders(true)    /**
-                                                 * PagedList will present null placeholders
-                                                 * for not-yet-loaded content.
-                                                 * This means its DataSource
-                                                 * (the {@link MangaItemDataSource}) can count all
-                                                 * unloaded items (so that the number of nulls
-                                                 * to present is known).
-                                                 */
+//                .setEnablePlaceholders(true)    /**
+//                                                 * PagedList will present null placeholders
+//                                                 * for not-yet-loaded content.
+//                                                 * This means its DataSource
+//                                                 * (the {@link MangaItemDataSource}) can count all
+//                                                 * unloaded items (so that the number of nulls
+//                                                 * to present is known).
+//                                                 */
+                .setEnablePlaceholders(false)   // PagedList will NOT present null placeholders at all.
                 .setPrefetchDistance(60)
                 .setPageSize(20)
                 .build();

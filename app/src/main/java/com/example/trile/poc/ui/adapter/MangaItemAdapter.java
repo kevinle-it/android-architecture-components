@@ -115,11 +115,12 @@ public class MangaItemAdapter
          * This means {@link MangaItem} can be {@code null} for items outside the prefetching
          * distance defined in {@link PagedList.Config}.
          *
-         * By default, the {@link PagedList} (with the {@link PagedList#size()} = total number of
-         * Manga Items we can load from the {@link AppDatabase} - here is 500) will be populated
-         * with a number of Manga Items from the {@link AppDatabase} equals to
-         * the {@link PagedList.Config.pageSize} and the trailer {@code NULL} items
-         * in {@link PagedList} after the {@link MangaItemDataSource#loadInitial()} is invoked.
+         * By default (Placeholders Enabled = <code>{@TRUE}</code>), the {@link PagedList} (with the
+         * {@link PagedList#size()} = total number of Manga Items we can load from
+         * the {@link AppDatabase} - here is 500) will be populated with a number of Manga Items
+         * from the {@link AppDatabase} equals to the {@link PagedList.Config.pageSize} and the
+         * trailer {@code NULL} items in {@link PagedList} after the
+         * {@link MangaItemDataSource#loadInitial()} is invoked.
          *
          * Afterwards, when we make a fast scroll to the end of the {@link PagedList}
          * the middle off-screen items in the {@link PagedList} will be populated with

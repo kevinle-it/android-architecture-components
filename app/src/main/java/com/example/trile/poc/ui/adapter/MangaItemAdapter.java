@@ -160,7 +160,7 @@ public class MangaItemAdapter
      * avoid using non-static inner class
      * watch here: https://www.youtube.com/watch?v=_CruQY55HOk
      */
-    public static class MangaItemViewHolder extends RecyclerView.ViewHolder {
+    static class MangaItemViewHolder extends RecyclerView.ViewHolder {
 
         private final MangaItemBinding mBinding;
 

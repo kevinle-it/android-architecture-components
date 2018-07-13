@@ -31,6 +31,7 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
         STATE_INCLUDE,
         STATE_EXCLUDE
     }
+
     private State mState;
 
     private int mIgnoreStateTextColor;
@@ -44,6 +45,7 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
 
     private OnClickListener mOnClickListener;
     private OnTouchListener mOnTouchListener;
+    private boolean mTouchEventEnabled = false;
 
     private List<OnChipStateChangeListener> mOnChipStateChangeListeners;
 
@@ -88,7 +90,7 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
 
         this.setGravity(Gravity.CENTER);
 
-        this.setClickable(true);
+        this.setClickable(mTouchEventEnabled);
 
         mIgnoreStateTextColor = ContextCompat.getColor(getContext(), R.color.chip_default_text);
         this.setTextColor(mIgnoreStateTextColor);
@@ -96,8 +98,13 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
         mIncludeStateTextColor = mExludeStateTextColor =
                 ContextCompat.getColor(getContext(), R.color.colorPrimary);
 
-        mIgnoreStateBackground = ContextCompat.getDrawable(getContext(), R.drawable
-                .ripple_chip_ignore_state);
+        if (mTouchEventEnabled) {
+            mIgnoreStateBackground = ContextCompat.getDrawable(getContext(), R.drawable
+                    .ripple_chip_ignore_state);
+        } else {
+            mIgnoreStateBackground = ContextCompat.getDrawable(getContext(), R.drawable
+                    .rounded_corners_chip_ignore_state);
+        }
         mIncludeStateBackground = ContextCompat.getDrawable(getContext(), R.drawable
                 .ripple_chip_include_state);
         mExcludeStateBackground = ContextCompat.getDrawable(getContext(), R.drawable
@@ -203,6 +210,21 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
         return mState;
     }
 
+    public void setTouchEventEnabled(boolean enabled) {
+        mTouchEventEnabled = enabled;
+        this.setClickable(mTouchEventEnabled);
+
+        if (mTouchEventEnabled) {
+            mIgnoreStateBackground = ContextCompat.getDrawable(getContext(), R.drawable
+                    .ripple_chip_ignore_state);
+        } else {
+            mIgnoreStateBackground = ContextCompat.getDrawable(getContext(), R.drawable
+                    .rounded_corners_chip_ignore_state);
+        }
+
+        this.setBackground(mIgnoreStateBackground);
+    }
+
     public void addOnChipStateChangeListener(OnChipStateChangeListener listener) {
         mOnChipStateChangeListeners.add(listener);
     }
@@ -224,17 +246,20 @@ public class Chip extends AppCompatTextView implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                onTouchDown(event);
-                break;
-            case MotionEvent.ACTION_UP:
-                onTouchUp(event);
-                break;
+        if (mTouchEventEnabled) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    onTouchDown(event);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    onTouchUp(event);
+                    break;
+            }
+            if (mOnTouchListener != null) {
+                mOnTouchListener.onTouch(v, event);
+            }
+            return true;
         }
-        if (mOnTouchListener != null) {
-            mOnTouchListener.onTouch(v, event);
-        }
-        return true;
+        return false;
     }
 }

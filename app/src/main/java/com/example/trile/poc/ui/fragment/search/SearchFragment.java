@@ -202,6 +202,7 @@ public class SearchFragment extends Fragment {
                     Chip chip = new Chip(getContext());
                     chip.setId(genre.getId());
                     chip.setText(genre.getGenre());
+                    chip.setTouchEventEnabled(true);
                     chipGroup.addView(chip);
                 }
 

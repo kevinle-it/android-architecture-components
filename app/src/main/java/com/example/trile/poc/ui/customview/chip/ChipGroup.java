@@ -150,7 +150,8 @@ public class ChipGroup extends RelativeLayout {
         final int maxChildHeightInContainer =
                 containerBottomBoundForChildViews - containerTopBoundForChildViews;
 
-        int currentLeftPosition = containerLeftBoundForChildViews;
+        // containerLeftBoundForChildViews - childMargins: Don't add left margin on first Chip in a row.
+        int currentLeftPosition = containerLeftBoundForChildViews - childMargins;
         int currentTopPosition = containerTopBoundForChildViews;
         int maxChildHeightOnCurrentLine = 0;
 
@@ -239,7 +240,8 @@ public class ChipGroup extends RelativeLayout {
             // => Go to next line.
             if (childMargins + currentLeftPosition + currentChildWidth + childMargins >
                     containerRightBoundForChildViews - 200) {
-                currentLeftPosition = containerLeftBoundForChildViews;
+                // containerLeftBoundForChildViews - childMargins: Don't add left margin on first Chip in a row.
+                currentLeftPosition = containerLeftBoundForChildViews - childMargins;
                 currentTopPosition += childMargins + maxChildHeightOnCurrentLine + childMargins;
                 // Reset maxChildHeight for next line.
                 maxChildHeightOnCurrentLine = 0;

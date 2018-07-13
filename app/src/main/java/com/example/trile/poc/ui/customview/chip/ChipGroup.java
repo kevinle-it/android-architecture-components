@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class ChipGroup extends RelativeLayout {
 
-    private List<Chip> mGenres;
+    private List<Chip> mChips;
 
     public ChipGroup(Context context) {
         super(context);
@@ -45,21 +45,21 @@ public class ChipGroup extends RelativeLayout {
     }
 
     private void setUpControl() {
-        setUpListGenres();
+        setUpListChips();
     }
 
-    private void setUpListGenres() {
-        mGenres = new ArrayList<>();
+    private void setUpListChips() {
+        mChips = new ArrayList<>();
     }
 
-    public List<Chip> getGenres() {
-        return mGenres;
+    public List<Chip> getChips() {
+        return mChips;
     }
 
     @Override
     public void addView(View child) {
         if (Objects.nonNull(child) && child instanceof Chip) {
-            mGenres.add((Chip) child);
+            mChips.add((Chip) child);
         }
         super.addView(child);
     }

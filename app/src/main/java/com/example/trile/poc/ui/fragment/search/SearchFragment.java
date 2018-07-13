@@ -215,7 +215,7 @@ public class SearchFragment extends Fragment {
                                 (dialog, which) -> {
                                     List<Integer> includeGenres = new ArrayList<>();
                                     List<Integer> excludeGenres = new ArrayList<>();
-                                    for (Chip chip : chipGroup.getGenres()) {
+                                    for (Chip chip : chipGroup.getChips()) {
                                         if (chip.getState() == Chip.State.STATE_INCLUDE) {
                                             includeGenres.add(chip.getId());
                                         } else if (chip.getState() == Chip.State.STATE_EXCLUDE) {

@@ -12,7 +12,7 @@
     <color name="extreme_light_gray">#fafafa</color>
 
     <color name="chip_default_text">#6f6f6f</color>
-    <color name="chip_default_background">#eeeeee</color>
+    <color name="chip_default_background">#dddddd</color>
 
     <color name="textColorPrimary">#000000</color>
     <color name="textMuted">#9e9e9e</color>

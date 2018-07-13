@@ -7,8 +7,6 @@ import android.content.Context;
 
 import com.example.trile.poc.database.entity.MangaItemEntity;
 
-import java.util.List;
-
 /**
  * @author trile
  * @since 6/13/18 at 16:51

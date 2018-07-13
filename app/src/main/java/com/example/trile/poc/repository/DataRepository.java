@@ -13,7 +13,6 @@ import com.example.trile.poc.database.entity.MangaGenreEntity;
 import com.example.trile.poc.database.entity.MangaItemEntity;
 import com.example.trile.poc.database.model.MangaItemsAndGenres;
 import com.example.trile.poc.repository.paging.discover.all.DiscoverAllBoundaryCallback;
-import com.example.trile.poc.repository.paging.discover.all.MangaItemDataSource;
 import com.example.trile.poc.repository.paging.discover.all.MangaItemDataSourceFactory;
 import com.example.trile.poc.repository.paging.search.genre.FilterByGenreResultDataSourceFactory;
 import com.example.trile.poc.repository.paging.search.name.FilterByNameResultDataSourceFactory;

@@ -48,6 +48,10 @@ public class DiscoverAllViewModel extends AndroidViewModel {
         return mMangaItems;
     }
 
+    public LiveData<Integer> getTotalNumMangaItems() {
+        return mRepository.getTotalNumMangaItems();
+    }
+
     public LiveData<String> getOrderBy() {
         return mOrderBy;
     }

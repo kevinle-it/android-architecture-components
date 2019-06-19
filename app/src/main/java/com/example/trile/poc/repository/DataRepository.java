@@ -1,6 +1,7 @@
 package com.example.trile.poc.repository;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.paging.PagedList;
 import android.arch.paging.RxPagedListBuilder;
 import android.content.Context;
@@ -28,6 +29,8 @@ import java.util.Map;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
@@ -48,12 +51,16 @@ public class DataRepository {
     private final AppExecutors mExecutors;
     private boolean mInitialized = false;
 
+    private MutableLiveData<Integer> mTotalNumMangaItems;
+
     private DataRepository(final AppDatabase database,
                            final MangaNetworkDataSource mangaNetworkDataSource,
                            final AppExecutors executors) {
         mDatabase = database;
         mMangaNetworkDataSource = mangaNetworkDataSource;
         mExecutors = executors;
+
+        mTotalNumMangaItems = new MutableLiveData<>();
     }
 
     /**
@@ -143,7 +150,7 @@ public class DataRepository {
 
                 List<MangaGenreEntity> mangaGenres = new ArrayList<>();
                 if (Objects.nonNull(newMangaItemsFromNetwork) && newMangaItemsFromNetwork.size() > 0) {
-                    for (MangaItemEntity item : newMangaItemsAndGenresFromNetwork.getMangaItems()) {
+                    for (MangaItemEntity item : newMangaItemsFromNetwork) {
                         for (int genreId : item.getGenres()) {
                             mangaGenres.add(new MangaGenreEntity(item.getId(), genreId));
                         }
@@ -256,6 +263,17 @@ public class DataRepository {
                 filterByNameResultDataSourceFactory,
                 pagedListConfig
         ).buildObservable();
+    }
+
+    public LiveData<Integer> getTotalNumMangaItems() {
+        Single.defer(() -> Single.just(mDatabase.mangaItemDAO().countAllMangaItems()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        mTotalNumMangaItems::postValue,
+                        Throwable::printStackTrace
+                );
+        return mTotalNumMangaItems;
     }
 
     /**

@@ -177,14 +177,19 @@ public class DiscoverAllFragment extends Fragment {
              * the oldList & newList in its super constructor.
              */
             mMangaItemAdapter.submitList(mangaItems);
-            mBinding.totalNumOfManga.setText(
-                    getString(R.string.discover_all_tab_total_num_of_manga,
-                            mangaItems.size())
-            );
+
             if (Objects.nonNull(mangaItems) && mangaItems.size() > 0) {
                 showMangaItemView();
             }
         });
+        mViewModel.getTotalNumMangaItems().observe(this, totalNumMangaItems ->
+                mBinding.totalNumOfManga.setText(
+                        getString(
+                                R.string.discover_all_tab_total_num_of_manga,
+                                totalNumMangaItems
+                        )
+                )
+        );
         mViewModel.getOrderBy().observe(this, orderBy -> {
             mBinding.sortByButton.setText(
                     getString(R.string.discover_all_tab_sort_by,
